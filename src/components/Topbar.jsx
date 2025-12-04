@@ -231,7 +231,7 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
             className="p-2 text-gray-700 rounded-full hover:bg-gray-100 transition-colors"
             aria-label="Toggle navigation menu"
           >
-            {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <Menu className="w-6 h-6" />
           </button>
         </div>
 

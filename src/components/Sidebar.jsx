@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   ChevronsLeft, ChevronsRight,
   ChevronDown, ChevronUp,
   BarChart3, Clock, ExternalLink,
   Shield, Heart, Settings, Copy,
-  Wallet, TrendingUp, Users,
+  Wallet, TrendingUp, Users, X,
 } from 'lucide-react';
 
 // --- Data Structure for Sidebar Navigation ---
@@ -16,10 +17,10 @@ const sidebarItems = [
     isCollapsible: true,
     initialOpen: false,
     subItems: [
-      { id: 'my-accounts', label: 'My accounts', icon: Users, isLink: true },
-      { id: 'performance', label: 'Performance', icon: BarChart3, isLink: true },
-      { id: 'history', label: 'History of orders', icon: Clock, isLink: true },
-      { id: 'terminal', label: 'Exness Terminal', icon: ExternalLink, isExternal: true },
+      { id: 'my-accounts', label: 'My accounts', icon: Users, route: '/my-account', isLink: true },
+      { id: 'performance', label: 'Performance', icon: BarChart3, route: '/performance', isLink: true },
+      { id: 'history', label: 'History of orders', icon: Clock, route: '/history-of-orders', isLink: true },
+      { id: 'terminal', label: 'Exness Terminal', icon: ExternalLink, route: '/exness-terminal', isExternal: true },
     ],
   },
     {
@@ -28,10 +29,10 @@ const sidebarItems = [
     icon: Wallet,
     isCollapsible: true,
     subItems: [
-      { id: 'deposit', label: 'Deposit', icon: Users, isLink: true },
-      { id: 'withdrawal', label: 'Withdrawal', icon: BarChart3, isLink: true },
-      { id: 'transaction', label: 'Transaction history', icon: Clock, isLink: true },
-      { id: 'crypto', label: 'Crypto wallet', icon: ExternalLink, isLink: true },
+      { id: 'deposit', label: 'Deposit', icon: Users, route: '/deposit', isLink: true },
+      { id: 'withdrawal', label: 'Withdrawal', icon: BarChart3, route: '/withdraw', isLink: true },
+      { id: 'transaction', label: 'Transaction history', icon: Clock, route: '/transaction-history', isLink: true },
+      { id: 'crypto', label: 'Crypto wallet', icon: ExternalLink, route: '/crypto-wallet', isLink: true },
     ],
   },
     {
@@ -40,9 +41,9 @@ const sidebarItems = [
     icon: BarChart3,
     isCollapsible: true,
     subItems: [
-      { id: 'analyst', label: 'Analyst View', icon: Users, isLink: true },
-      { id: 'market', label: 'Market News', icon: BarChart3, isLink: true },
-      { id: 'economic', label: 'Economic Calendar', icon: ExternalLink, isExternal: true },
+      { id: 'analyst', label: 'Analyst View', icon: Users, route: '/analyst-view', isLink: true },
+      { id: 'market', label: 'Market News', icon: BarChart3, route: '/market-news', isLink: true },
+      { id: 'economic', label: 'Economic Calendar', icon: ExternalLink, route: '/economic-calendar', isExternal: true },
     ],
   },
   {
@@ -51,22 +52,22 @@ const sidebarItems = [
     icon: Shield,
     isCollapsible: true,
     subItems: [
-      { id: 'tradingcondition', label: 'Trading Conditions', icon: Users, isLink: true },
-      { id: 'savings', label: 'Savings', icon: BarChart3, isLink: true },
-      { id: 'virtual', label: 'Virtual Private Server', icon: Clock, isLink: true },
+      { id: 'tradingcondition', label: 'Trading Conditions', icon: Users, route: '/trading-conditions', isLink: true },
+      { id: 'savings', label: 'Savings', icon: BarChart3, route: '/savings', isLink: true },
+      { id: 'virtual', label: 'Virtual Private Server', icon: Clock, route: '/virtual-private-server', isLink: true },
     ],
   },
-  { id: 'copy-trading', label: 'Copy Trading', icon: Copy, isCollapsible: false },
-  { id: 'support', label: 'Support hub', icon: Heart, isCollapsible: false, isNew: true },
+  { id: 'copy-trading', label: 'Copy Trading', icon: Copy, route: '/copy-trading', isCollapsible: false },
+  { id: 'support', label: 'Support hub', icon: Heart, route: '/support-hub', isCollapsible: false, isNew: true },
     {
     id: 'settings',
     label: 'Settings',
     icon: Settings,
     isCollapsible: true,
     subItems: [
-      { id: 'profile', label: 'Profile', icon: Users, isLink: true },
-      { id: 'security', label: 'Security', icon: BarChart3, isLink: true },
-      { id: 'tradingterminal', label: 'Trading Terminal', icon: Clock, isLink: true },
+      { id: 'profile', label: 'Profile', icon: Users, route: '/profile', isLink: true },
+      { id: 'security', label: 'Security', icon: BarChart3, route: '/security', isLink: true },
+      { id: 'tradingterminal', label: 'Trading Terminal', icon: Clock, route: '/trading-terminal-settings', isLink: true },
     ],
   },
 ];
@@ -75,21 +76,43 @@ const sidebarItems = [
  * Component for a single Menu Item or Sub-Menu Header.
  * Handles the display logic for both expanded and collapsed states.
  */
-const SidebarItem = ({ item, isExpanded }) => {
+const SidebarItem = ({ item, isExpanded, currentPath, onNavigate }) => {
   // Local state to manage the expansion of sub-menus (like 'Trading')
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(item.initialOpen || false);
+  
+  const navigate = onNavigate;
+  const location = { pathname: currentPath };
 
   const Icon = item.icon;
 
   const baseClasses = "flex items-center p-2 rounded-lg cursor-pointer transition-colors duration-200";
   const expandedClasses = "hover:bg-gray-100";
   const collapsedClasses = "hover:bg-gray-100 justify-center";
-  const activeClasses = ''; // No tab selected by default
+  
+  // Only highlight parent if it's a direct route (no sub-items) and matches current path
+  const isParentActive = !item.subItems && item.route === currentPath;
+  const activeClasses = isParentActive ? 'bg-gray-50 border-r-2 border-yellow-500' : '';
 
-  // Toggles the sub-menu if the item is collapsible
+  // Toggles the sub-menu if the item is collapsible, or navigate if it has a direct route
   const handleClick = () => {
     if (item.isCollapsible) {
-      setIsSubMenuOpen(!isSubMenuOpen);
+      // If it has subItems, only toggle the submenu (don't navigate)
+      if (item.subItems && item.subItems.length > 0) {
+        setIsSubMenuOpen(!isSubMenuOpen);
+      } else if (item.route) {
+        // If no subItems but has route, navigate directly
+        navigate(item.route);
+      }
+    } else if (item.route) {
+      // Non-collapsible items with routes navigate directly
+      navigate(item.route);
+    }
+  };
+
+  // Handle sub-item click
+  const handleSubItemClick = (route) => {
+    if (route) {
+      navigate(route);
     }
   };
 
@@ -130,15 +153,21 @@ const SidebarItem = ({ item, isExpanded }) => {
       {/* Sub-Items (only rendered when expanded and sub-menu is open) */}
       {isExpanded && item.subItems && isSubMenuOpen && (
         <div className="pl-4 pr-1 py-1 space-y-1 border-l-2 border-gray-200 ml-3">
-          {item.subItems.map((subItem) => (
-            <div
-              key={subItem.id}
-              className="p-2 rounded-lg cursor-pointer text-sm text-gray-700 transition-colors duration-200 hover:bg-gray-200/50"
-            >
-              {subItem.label}
-              {subItem.isExternal && <ExternalLink className="w-3 h-3 ml-2 inline-block align-text-bottom text-gray-400" />}
-            </div>
-          ))}
+          {item.subItems.map((subItem) => {
+            const isActive = subItem.route === currentPath;
+            return (
+              <div
+                key={subItem.id}
+                className={`p-2 rounded-sm cursor-pointer text-sm transition-colors duration-200 hover:bg-gray-200/50 ${
+                  isActive ? 'bg-gray-100 text-gray-900 font-medium border border-gray-500' : 'text-gray-700'
+                }`}
+                onClick={() => handleSubItemClick(subItem.route)}
+              >
+                {subItem.label}
+                {subItem.isExternal && <ExternalLink className="w-3 h-3 ml-2 inline-block align-text-bottom text-gray-400" />}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
@@ -152,6 +181,8 @@ const SidebarItem = ({ item, isExpanded }) => {
  */
 const Sidebar = ({ isExpanded, setIsExpanded, isSidebarOpen, setIsSidebarOpen }) => {
    const [isHoveredOpen, setIsHoveredOpen] = useState(false);
+   const navigate = useNavigate();
+   const location = useLocation();
 
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
@@ -163,9 +194,20 @@ const Sidebar = ({ isExpanded, setIsExpanded, isSidebarOpen, setIsSidebarOpen })
 
   return (
     <div
-      className={`${isSidebarOpen ? 'fixed inset-y-0 left-0 z-50 flex mt-14' : 'hidden'} lg:flex lg:relative lg:inset-auto flex-col h-[calc(90vh-px)] bg-white border-r border-gray-200 transition-all duration-300 ease-in-out flex-shrink:0 ${widthClass}`}
+      className={`${isSidebarOpen ? 'fixed inset-y-0 left-0 z-50 flex' : 'hidden'} lg:flex lg:relative lg:inset-auto flex-col bg-white border-r border-gray-200 transition-all duration-300 ease-in-out flex-shrink:0 ${widthClass}`}
       style={{ willChange: 'width' }}
     >
+      {/* Close Button (Mobile Only) */}
+      <div className="lg:hidden flex justify-end p-2 border-b border-gray-200">
+        <button
+          onClick={() => setIsSidebarOpen(false)}
+          className="p-2 text-gray-700 rounded-full hover:bg-gray-100 transition-colors"
+          aria-label="Close sidebar"
+        >
+          <X className="w-6 h-6" />
+        </button>
+      </div>
+
       {/* Scrollable Navigation Area */}
       <div
         className={`flex-1 overflow-y-auto space-y-2 h-[80%] transition-all duration-300 ${isExpanded ? 'px-4 py-1 pr-2' : 'p-1'}`}
@@ -173,7 +215,13 @@ const Sidebar = ({ isExpanded, setIsExpanded, isSidebarOpen, setIsSidebarOpen })
         onMouseLeave={() => { if (isHoveredOpen) { setIsExpanded(false); setIsHoveredOpen(false); } }}
       >
         {sidebarItems.map((item) => (
-          <SidebarItem key={item.id} item={item} isExpanded={isExpanded} />
+          <SidebarItem 
+            key={item.id} 
+            item={item} 
+            isExpanded={isExpanded}
+            currentPath={location.pathname}
+            onNavigate={navigate}
+          />
         ))}
       </div>
 

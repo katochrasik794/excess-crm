@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { CreditCard, Lock, ChevronDown } from 'lucide-react';
 import TopContainer from '../../components/TopContainer';
 import Footer from '../../components/Footer';
@@ -149,6 +150,21 @@ const paymentMethods = [
     limits: '10 - 200,000 USD',
     isAvailable: false,
   },
+  {
+    name: 'USD Coin (USDC ERC20)',
+    icon: (props) => (
+      <img
+        {...props}
+        src="/usd-coin.png"
+        alt="USD Coin"
+        className="w-6 h-6"
+      />
+    ),
+    processingTime: 'Instant - 15 minutes',
+    fee: '0%',
+    limits: '10 - 200,000 USD',
+    isAvailable: false,
+  },
 ];
 
 // PaymentMethodCard Component
@@ -217,9 +233,32 @@ const PaymentMethodCard = ({ method, onClick }) => {
 
 // Deposit Component
 const Deposit = () => {
+  const location = useLocation();
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  // Auto-select cryptocurrency if coming from CryptoWallet
+  useEffect(() => {
+    if (location.state?.selectedCrypto) {
+      const cryptoName = location.state.selectedCrypto.name;
+      
+      // Map crypto wallet names to deposit page names
+      const nameMapping = {
+        'Ether (ETH)': 'Ethereum (ETH)',
+        'Tronix (TRX)': 'TRON (TRX)',
+      };
+      
+      // Use mapped name if exists, otherwise use the original name
+      const mappedName = nameMapping[cryptoName] || cryptoName;
+      
+      // Find the matching payment method
+      const matchingMethod = paymentMethods.find(method => method.name === mappedName);
+      if (matchingMethod) {
+        setSelectedMethod(matchingMethod);
+      }
+    }
+  }, [location.state]);
 
   const handleBackToAll = () => setSelectedMethod(null);
 
