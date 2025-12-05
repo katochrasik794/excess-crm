@@ -1,5 +1,6 @@
 // Topbar.jsx
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   LayoutGrid,
   Globe,
@@ -75,10 +76,10 @@ const historyDropdownContent = {
 
 // Content for the Apps dropdown
 const appsDropdownContent = [
-  { name: "Personal area", icon: LayoutGrid },
-  { name: "Exness terminal", icon: Copy },
-  { name: "Public website", icon: Globe },
-  { name: "Partnership", icon: User },
+  { name: "Personal area", icon: LayoutGrid, route: "/my-account" },
+  { name: "Exness terminal", icon: Copy, route: "/exness-terminal" },
+  { name: "Public website", icon: Globe, route: "#" },
+  { name: "Partnership", icon: User, route: "#" },
 ];
 
 // Content for the Profile dropdown
@@ -105,6 +106,7 @@ const profileDropdownContent = [
 
 // The main Topbar component
 const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
+  const navigate = useNavigate();
   const [isBalanceDropdownOpen, setIsBalanceDropdownOpen] = useState(false);
   const [isBalanceHidden, setIsBalanceHidden] = useState(false);
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
@@ -327,10 +329,16 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                   </p>
 
                   <div className="flex gap-4 mt-3">
-                    <button className="px-3 py-1.5 text-xs font-medium rounded-sm bg-gray-100 hover:bg-gray-100">
+                    <button 
+                      onClick={() => navigate('/transfer')}
+                      className="px-3 py-1.5 text-xs font-medium rounded-sm bg-gray-100 hover:bg-gray-100"
+                    >
                       Transfer
                     </button>
-                    <button className="px-3 py-1.5 text-xs font-medium rounded-sm bg-gray-100 hover:bg-gray-100">
+                    <button 
+                      onClick={() => navigate('/withdraw')}
+                      className="px-3 py-1.5 text-xs font-medium rounded-sm bg-gray-100 hover:bg-gray-100"
+                    >
                       Withdraw
                     </button>
                   </div>
@@ -400,8 +408,13 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                         key={app.name}
                         href="#"
                         className="flex items-center px-2 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                        onClick={() => {
-                          console.log(`Navigating to: ${app.name}`);
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (app.route && app.route !== '#') {
+                            navigate(app.route);
+                          } else {
+                            console.log(`Navigating to: ${app.name}`);
+                          }
                           setIsAppsDropdownOpen(false);
                         }}
                       >
@@ -556,8 +569,15 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                           <a
                             href="#"
                             className={`flex items-center px-2 py-2 text-sm rounded-lg transition-colors ${link.className}`}
-                            onClick={() => {
-                              console.log(`Action: ${link.name}`);
+                            onClick={(e) => {
+                              e.preventDefault();
+                              if (link.name === "Settings") {
+                                navigate('/profile');
+                              } else if (link.name === "Trading conditions") {
+                                navigate('/trading-conditions');
+                              } else {
+                                console.log(`Action: ${link.name}`);
+                              }
                               setIsProfileDropdownOpen(false);
                             }}
                           >

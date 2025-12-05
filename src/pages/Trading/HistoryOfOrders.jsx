@@ -62,10 +62,10 @@ const HistoryOfOrders = () => {
     return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
   };
 
-  const inRange = (day) => {
-    if (!rangeStart || !rangeEnd) return false;
-    return day >= startOfDay(rangeStart) && day <= startOfDay(rangeEnd);
-  };
+  // const inRange = (day) => {
+  //   if (!rangeStart || !rangeEnd) return false;
+  //   return day >= startOfDay(rangeStart) && day <= startOfDay(rangeEnd);
+  // };
 
   function startOfDay(d) {
     return new Date(d.getFullYear(), d.getMonth(), d.getDate());

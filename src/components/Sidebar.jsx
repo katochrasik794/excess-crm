@@ -48,7 +48,7 @@ const sidebarItems = [
   },
   {
     id: 'benefits',
-    label: 'Exness benefits',
+    label: 'FinCRM benefits',
     icon: Shield,
     isCollapsible: true,
     subItems: [

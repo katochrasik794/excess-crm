@@ -16,6 +16,10 @@ import HistoryOfOrders from './pages/Trading/HistoryOfOrders'
 import SetUpAccount from './pages/Trading/SetUpAccount'
 import Profile from './pages/Settings/Profile'
 import Security from './pages/Settings/Security'
+import TradingConditions from './pages/Fincrm_Benefits/TradingConditions'
+import Savings from './pages/Fincrm_Benefits/Savings'
+import VirtualPrivateServer from './pages/Fincrm_Benefits/VirtualPrivateServer'
+import SupportHub from './pages/SupportHub'
 
 // Simple placeholder component for routes without pages yet
 const PlaceholderPage = ({ title }) => (
@@ -60,13 +64,13 @@ const App = () => {
               <Route path="/economic-calendar" element={<PlaceholderPage title="Economic Calendar" />} />
               
               {/* Benefits Routes */}
-              <Route path="/trading-conditions" element={<PlaceholderPage title="Trading Conditions" />} />
-              <Route path="/savings" element={<PlaceholderPage title="Savings" />} />
-              <Route path="/virtual-private-server" element={<PlaceholderPage title="Virtual Private Server" />} />
+              <Route path="/trading-conditions" element={<TradingConditions />} />
+              <Route path="/savings" element={<Savings />} />
+              <Route path="/virtual-private-server" element={<VirtualPrivateServer />} />
               
               {/* Other Routes */}
               <Route path="/copy-trading" element={<PlaceholderPage title="Copy Trading" />} />
-              <Route path="/support-hub" element={<PlaceholderPage title="Support Hub" />} />
+              <Route path="/support-hub" element={<SupportHub />} />
               
               {/* Settings Routes */}
               <Route path="/profile" element={<Profile />} />

@@ -39,10 +39,10 @@ const PaymentMethodCard = ({ method, onClick }) => {
       `}
     >
       {/* Header: icon + name + unavailable */}
-      <div className="flex items-start justify-between mb-3 sm:mb-4">
+      <div className="flex items-start justify-between mb-1 md:mb-2">
         <div className="flex items-center">
           {/* Icon */}
-          <div className="mr-3 w-10 h-10 flex items-center justify-center filter grayscale">
+          <div className="mr-3 w-10 flex items-center justify-center filter grayscale">
             <Icon className="w-6 h-6 text-gray-500" />
           </div>
 
@@ -68,7 +68,7 @@ const PaymentMethodCard = ({ method, onClick }) => {
       </div>
 
       {/* Details with left gap */}
-      <div className="space-y-1 text-xs sm:text-sm text-gray-700 pl-12">
+      <div className="space-y-1 text-xs sm:text-sm text-gray-700 pl-13">
         <p>
           <span className="font-medium text-gray-800">Processing time:</span>{' '}
           {method.processingTime}
