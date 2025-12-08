@@ -1,0 +1,258 @@
+.analyst-view {
+  background-color: white;
+}
+
+.analyst-view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.analyst-view-header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.filter-buttons {
+  display: flex;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #dee2e6;
+  padding-bottom: 0;
+}
+
+.filter-btn {
+  padding: 0.75rem 1.5rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  bottom: -2px;
+}
+
+.filter-btn:hover {
+  color: #1a1a1a;
+}
+
+.filter-btn.active {
+  color: #1a1a1a;
+  border-bottom-color: #ffc107;
+}
+
+.trading-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.trading-card {
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 1rem;
+
+  transition: all 0.3s ease;
+}
+
+/* .trading-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+} */
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.pair-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pair-info h3 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.timeframe {
+  padding: 0.20rem 0.70rem;
+  background-color: #e9ecef;
+  border-radius: 6px;
+  font-size: 0.70rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+.time-info {
+  text-align: right;
+}
+
+.time-info .time {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.card-date {
+  margin-bottom: 1rem;
+}
+
+.card-date p {
+  font-size: 0.8rem;
+  color: #6c757d;
+  margin: 0;
+}
+
+.chart-container {
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+
+
+.card-details {
+  margin-top: 1rem;
+}
+
+.expected-move {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.expected-move .label {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.expected-move .value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.expected-move .value.up {
+  color: #28a745;
+}
+
+.expected-move .value.down {
+  color: #dc3545;
+}
+
+.trading-levels {
+  /* display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem; */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.level {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.level .label {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.level .value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.trade-btn {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #ffde02;
+  color: #1a1a1a;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.trade-btn:hover {
+  background-color: #ffca2c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+}
+
+.trade-btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .trading-cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .analyst-view {
+    padding: 1rem;
+  }
+
+  .analyst-view-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+
+  .filter-buttons {
+    overflow-x: auto;
+    gap: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filter-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .trading-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .analyst-view-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .trading-card {
+    padding: 1rem;
+  }
+
+  .pair-info h3 {
+    font-size: 1.1rem;
+  }
+}
+

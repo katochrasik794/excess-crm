@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AccountProvider } from './context/AccountContext'
 import Topbar from './components/Topbar'
 import Sidebar from './components/Sidebar'
+import MobileSidebar from './components/MobileSidebar'
 import ExnessTerminal from './pages/Trading/ExnessTerminal'
 import MyAccount from './pages/Trading/MyAccount'
 import OpenAccount from './pages/Trading/OpenAccount'
@@ -16,10 +17,12 @@ import HistoryOfOrders from './pages/Trading/HistoryOfOrders'
 import SetUpAccount from './pages/Trading/SetUpAccount'
 import Profile from './pages/Settings/Profile'
 import Security from './pages/Settings/Security'
+import TradingTerminal from './pages/Settings/TradingTerminal'
 import TradingConditions from './pages/Fincrm_Benefits/TradingConditions'
 import Savings from './pages/Fincrm_Benefits/Savings'
 import VirtualPrivateServer from './pages/Fincrm_Benefits/VirtualPrivateServer'
 import SupportHub from './pages/SupportHub'
+import AnalystView from './pages/Analytics/AnalystView'
 
 // Simple placeholder component for routes without pages yet
 const PlaceholderPage = ({ title }) => (
@@ -41,6 +44,7 @@ const App = () => {
         </div>
         <div className="content flex flex-1 overflow-hidden">
           <Sidebar isExpanded={isExpanded} setIsExpanded={setIsExpanded} isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+          <MobileSidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
           <main className="flex-1 overflow-y-auto">
             <Routes>
               <Route path="/" element={<MyAccount />} />
@@ -59,7 +63,7 @@ const App = () => {
               <Route path="/transfer" element={<Transfer />} />
               
               {/* Analytics Routes */}
-              <Route path="/analyst-view" element={<PlaceholderPage title="Analyst View" />} />
+              <Route path="/analyst-view" element={<AnalystView />} />
               <Route path="/market-news" element={<PlaceholderPage title="Market News" />} />
               <Route path="/economic-calendar" element={<PlaceholderPage title="Economic Calendar" />} />
               
@@ -75,7 +79,7 @@ const App = () => {
               {/* Settings Routes */}
               <Route path="/profile" element={<Profile />} />
               <Route path="/security" element={<Security />} />
-              <Route path="/trading-terminal-settings" element={<PlaceholderPage title="Trading Terminal Settings" />} />
+              <Route path="/trading-terminal-settings" element={<TradingTerminal />} />
             </Routes>
           </main>
         </div>

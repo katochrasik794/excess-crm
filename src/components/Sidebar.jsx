@@ -194,20 +194,9 @@ const Sidebar = ({ isExpanded, setIsExpanded, isSidebarOpen, setIsSidebarOpen })
 
   return (
     <div
-      className={`${isSidebarOpen ? 'fixed inset-y-0 left-0 z-50 flex' : 'hidden'} lg:flex lg:relative lg:inset-auto flex-col bg-white border-r border-gray-200 transition-all duration-300 ease-in-out flex-shrink:0 ${widthClass}`}
+      className={`hidden lg:flex flex-col bg-white border-r border-gray-200 transition-all duration-300 ease-in-out flex-shrink-0 ${widthClass}`}
       style={{ willChange: 'width' }}
     >
-      {/* Close Button (Mobile Only) */}
-      <div className="lg:hidden flex justify-end p-2 border-b border-gray-200">
-        <button
-          onClick={() => setIsSidebarOpen(false)}
-          className="p-2 text-gray-700 rounded-full hover:bg-gray-100 transition-colors"
-          aria-label="Close sidebar"
-        >
-          <X className="w-6 h-6" />
-        </button>
-      </div>
-
       {/* Scrollable Navigation Area */}
       <div
         className={`flex-1 overflow-y-auto space-y-2 h-[80%] transition-all duration-300 ${isExpanded ? 'px-4 py-1 pr-2' : 'p-1'}`}
