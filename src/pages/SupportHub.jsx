@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, Plus, MessageSquarePlus, Phone, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import Footer from '../components/Footer';
 import TopContainer from '../components/TopContainer';
 
-const SupportHub = () => {
+const SupportHub = ({ onOpenChat }) => {
+  const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState('All');
   const dropdownRef = useRef(null);
@@ -77,7 +79,7 @@ const SupportHub = () => {
                 <h4 className="text-lg font-bold text-gray-900">Need assistance?</h4>
                 <p className="text-gray-600 text-sm">Complete the form and we will get back to you shortly.</p>
               </div>
-              <button className="w-[170px] flex items-center justify-center gap-2 bg-[#ffde02] text-gray-900 py-2 px-4 rounded-md hover:bg-yellow-300/80 transition-colors font-medium">
+              <button onClick={() => navigate('/open-a-ticket')} className="w-[170px] flex items-center justify-center gap-2 bg-[#ffde02] text-gray-900 py-2 px-4 rounded-md hover:bg-yellow-300/80 transition-colors font-medium">
                 <Plus size={18} />
                 Open a ticket
               </button>
@@ -92,7 +94,10 @@ const SupportHub = () => {
                 <h4 className="text-lg font-bold text-gray-900">Live chat</h4>
                 <p className="text-gray-600 text-sm">Can't find the answers you're looking for? Chat with our Intelligent Assistant.</p>
               </div>
-              <button className="w-[150px] flex items-center justify-center gap-2 border border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-50 transition-colors font-medium">
+              <button 
+                onClick={onOpenChat}
+                className="w-[150px] flex items-center justify-center gap-2 border border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-50 transition-colors font-medium"
+              >
                 <MessageSquarePlus size={18} />
                 Start chat
               </button>

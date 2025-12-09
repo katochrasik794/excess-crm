@@ -22,7 +22,18 @@ import TradingConditions from './pages/Fincrm_Benefits/TradingConditions'
 import Savings from './pages/Fincrm_Benefits/Savings'
 import VirtualPrivateServer from './pages/Fincrm_Benefits/VirtualPrivateServer'
 import SupportHub from './pages/SupportHub'
+import OpenATicket from './pages/OpenATicket'
 import AnalystView from './pages/Analytics/AnalystView'
+import MarketNews from './pages/Analytics/MarketNews'
+import CopyTrading from './pages/CopyTrading'
+import AccountSecurity from './components/AccountSecurity'
+import ExnessPlatforms from './components/ExnessPlatforms'
+
+import AccountVerification from './components/AccountVerification'
+import Trading_ from './components/Trading_'
+import ExnessPrograms from './components/ExnessPrograms'
+import Vps from './components/Vps'
+import ChatBot from './components/ChatBot'
 
 // Simple placeholder component for routes without pages yet
 const PlaceholderPage = ({ title }) => (
@@ -35,6 +46,8 @@ const PlaceholderPage = ({ title }) => (
 const App = () => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   return (
     <AccountProvider>
       <Router>
@@ -44,8 +57,9 @@ const App = () => {
         </div>
         <div className="content flex flex-1 overflow-hidden">
           <Sidebar isExpanded={isExpanded} setIsExpanded={setIsExpanded} isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
-          <MobileSidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+          <MobileSidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} onOpenChat={() => setIsChatOpen(true)} />
           <main className="flex-1 overflow-y-auto">
+            <ChatBot isOpen={isChatOpen} onToggle={() => setIsChatOpen(!isChatOpen)} />
             <Routes>
               <Route path="/" element={<MyAccount />} />
               <Route path="/my-account" element={<MyAccount />} />
@@ -64,7 +78,7 @@ const App = () => {
               
               {/* Analytics Routes */}
               <Route path="/analyst-view" element={<AnalystView />} />
-              <Route path="/market-news" element={<PlaceholderPage title="Market News" />} />
+              <Route path="/market-news" element={<MarketNews />} />
               <Route path="/economic-calendar" element={<PlaceholderPage title="Economic Calendar" />} />
               
               {/* Benefits Routes */}
@@ -73,13 +87,22 @@ const App = () => {
               <Route path="/virtual-private-server" element={<VirtualPrivateServer />} />
               
               {/* Other Routes */}
-              <Route path="/copy-trading" element={<PlaceholderPage title="Copy Trading" />} />
-              <Route path="/support-hub" element={<SupportHub />} />
+              <Route path="/copy-trading" element={<CopyTrading />} />
+              <Route path="/support-hub" element={<SupportHub onOpenChat={() => setIsChatOpen(true)} />} />
+              <Route path="/open-a-ticket" element={<OpenATicket />} />
               
               {/* Settings Routes */}
               <Route path="/profile" element={<Profile />} />
               <Route path="/security" element={<Security />} />
               <Route path="/trading-terminal-settings" element={<TradingTerminal />} />
+              
+              {/* Ticket Routes */}
+              <Route path="/pa/support_hub/help_center/complaints/new/account-and-security" element={<AccountSecurity />} />
+              <Route path="/pa/support_hub/help_center/complaints/new/exness-platforms" element={<ExnessPlatforms />} />
+              <Route path="/pa/support_hub/help_center/complaints/new/account-verification" element={<AccountVerification />} />
+              <Route path="/pa/support_hub/help_center/complaints/new/trading" element={<Trading_ />} />
+              <Route path="/pa/support_hub/help_center/complaints/new/exness-programs" element={<ExnessPrograms />} />
+              <Route path="/pa/support_hub/help_center/complaints/new/vps" element={<Vps />} />
             </Routes>
           </main>
         </div>

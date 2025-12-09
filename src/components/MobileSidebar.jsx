@@ -10,6 +10,7 @@ import {
 
 // --- Data Structure for Mobile Sidebar Navigation ---
 const sidebarItems = [
+
   {
     id: 'trading',
     label: 'Trading',
@@ -184,28 +185,28 @@ const UserProfileSection = ({ onClose, navigate }) => {
     <div className="border-b border-gray-200">
       {/* User Email Toggle */}
       <div
-        className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition-colors"
+        className="flex items-center justify-between px-4 py-8 cursor-pointer hover:bg-gray-50 transition-colors"
         onClick={() => setIsProfileOpen(!isProfileOpen)}
       >
         <div className="flex items-center gap-3">
-          <User className="w-5 h-5 text-gray-600" />
-          <span className="text-sm font-medium text-gray-800">{userEmail}</span>
+          <User className="h-4 w-4 text-gray-600" />
+          <span className="text-xs font-medium text-gray-600">{userEmail}</span>
         </div>
-        <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform duration-200 ${isProfileOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`h-4 w-4 text-gray-500 transition-transform duration-200 ${isProfileOpen ? 'rotate-180' : ''}`} />
       </div>
 
       {/* Profile Dropdown Content */}
       {isProfileOpen && (
-        <div className="bg-gray-50 pb-2">
+        <div className="pb-2">
           <button
             onClick={() => handleNavigation('/profile')}
-            className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+            className="w-full text-left px-4 py-3 text-xs text-gray-900 hover:bg-gray-100 transition-colors"
           >
             Settings
           </button>
           <button
             onClick={() => handleNavigation('/trading-conditions')}
-            className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors border-b border-gray-200"
+            className="w-full text-left px-4 py-3 text-xs text-gray-900 hover:bg-gray-100 transition-colors border-b border-gray-200"
           >
             Trading conditions
           </button>
@@ -214,7 +215,7 @@ const UserProfileSection = ({ onClose, navigate }) => {
               console.log('Sign out clicked');
               onClose();
             }}
-            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 text-xs text-red-600 hover:bg-red-50 transition-colors"
           >
             <LogOut className="w-4 h-4" />
             Sign Out
@@ -247,20 +248,20 @@ const BalanceSection = () => {
         onClick={() => setIsBalanceOpen(!isBalanceOpen)}
       >
         <div className="flex items-center gap-3">
-          <Wallet className="w-5 h-5 text-gray-600" />
-          <span className={`text-sm font-semibold text-gray-800 ${isBalanceHidden ? 'blur-sm' : ''}`}>
+          <Wallet className="h-4 w-4 text-gray-600" />
+          <span className={`text-xs font-semibold text-gray-800 ${isBalanceHidden ? 'blur-sm' : ''}`}>
             {balanceValue} {currency}
           </span>
         </div>
-        <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform duration-200 ${isBalanceOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`h-4 w-4 text-gray-500 transition-transform duration-200 ${isBalanceOpen ? 'rotate-180' : ''}`} />
       </div>
 
       {/* Balance Dropdown Content */}
       {isBalanceOpen && (
-        <div className="bg-gray-50 px-4 pb-4 space-y-3">
+        <div className="px-4 pb-4 space-y-3">
           {/* Hide Balance Toggle */}
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-700">Hide balance</span>
+          <div className="flex justify-between items-center border-t border-b border-gray-200 py-1">
+            <span className="text-xs text-gray-900">Hide balance</span>
             <ToggleSwitch
               checked={isBalanceHidden}
               onChange={() => setIsBalanceHidden(!isBalanceHidden)}
@@ -269,11 +270,11 @@ const BalanceSection = () => {
 
           {/* Investment Wallet */}
           <div>
-            <div className={`text-base font-semibold text-gray-900 ${isBalanceHidden ? 'blur-sm' : ''}`}>
+            <div className={`text-xs font-semibold text-gray-900 ${isBalanceHidden ? 'blur-sm' : ''}`}>
               {balanceValue} {currency}
             </div>
             <p className="text-xs text-gray-500 mt-1">Investment wallet</p>
-            
+
             {/* Account ID with Copy */}
             <div className="flex items-center gap-2 mt-2">
               <span className="text-xs text-gray-500">{accountId}</span>
@@ -282,7 +283,7 @@ const BalanceSection = () => {
                 className="p-1 rounded hover:bg-gray-200 transition-colors"
                 title="Copy account ID"
               >
-                <Copy className="w-3.5 h-3.5 text-gray-500" />
+                <Copy className="h-4 w-4 text-gray-500" />
               </button>
             </div>
           </div>
@@ -321,15 +322,15 @@ const MobileSidebarItem = ({ item, currentPath, onNavigate, onClose }) => {
       {/* Menu Item Header */}
       <div
         className={`flex items-center p-4 cursor-pointer transition-all duration-200 hover:bg-gray-50 active:bg-gray-100 ${
-          isParentActive ? 'bg-yellow-50 border-r-4 border-yellow-500' : ''
+          isParentActive ? 'bg-gray-100 border border-gray-500' : ''
         }`}
         onClick={handleClick}
       >
         {/* Icon */}
-        <Icon className="w-6 h-6 text-gray-700 mr-4 flex-shrink-0" />
+        <Icon className="h-4 w-4 text-gray-700 mr-4 flex-shrink-0" />
 
         {/* Label */}
-        <span className="flex-1 text-base font-medium text-gray-800">
+        <span className="flex-1 text-xs font-medium text-gray-800">
           {item.label}
         </span>
 
@@ -344,9 +345,9 @@ const MobileSidebarItem = ({ item, currentPath, onNavigate, onClose }) => {
         {item.isCollapsible && item.subItems && item.subItems.length > 0 && (
           <div className="ml-3 transition-transform duration-200">
             {isSubMenuOpen ? (
-              <ChevronUp className="w-5 h-5 text-gray-500" />
+              <ChevronUp className="h-4 w-4 text-gray-500" />
             ) : (
-              <ChevronDown className="w-5 h-5 text-gray-500" />
+              <ChevronDown className="h-4 w-4 text-gray-500" />
             )}
           </div>
         )}
@@ -354,7 +355,7 @@ const MobileSidebarItem = ({ item, currentPath, onNavigate, onClose }) => {
 
       {/* Sub-Items */}
       {item.subItems && isSubMenuOpen && (
-        <div className="bg-gray-50 border-l-4 border-gray-200">
+        <div className="border-l-4 border-gray-200">
           {item.hasNestedMenu ? (
             // Nested menu structure for Help section
             item.subItems.map((category) => (
@@ -369,7 +370,7 @@ const MobileSidebarItem = ({ item, currentPath, onNavigate, onClose }) => {
                 {category.items?.map((categoryItem) => (
                   <div
                     key={categoryItem.id}
-                    className="px-4 py-2.5 pl-8 cursor-pointer text-sm text-gray-700 hover:bg-gray-100 active:bg-gray-200 transition-all duration-200"
+                    className="px-4 py-2.5 pl-8 cursor-pointer text-xs text-gray-700 hover:bg-gray-100 active:bg-gray-200 transition-all duration-200"
                     onClick={() => handleSubItemClick(categoryItem.route)}
                   >
                     {categoryItem.label}
@@ -382,7 +383,7 @@ const MobileSidebarItem = ({ item, currentPath, onNavigate, onClose }) => {
             item.subItems.map((langItem) => (
               <div
                 key={langItem.id}
-                className={`px-4 py-3 cursor-pointer text-sm transition-all duration-200 hover:bg-gray-100 ${
+                className={`px-4 py-3 cursor-pointer text-xs transition-all duration-200 hover:bg-gray-100 ${
                   langItem.isSelected ? 'bg-gray-200 text-gray-900 font-medium' : 'text-gray-700'
                 }`}
                 onClick={() => {
@@ -400,8 +401,8 @@ const MobileSidebarItem = ({ item, currentPath, onNavigate, onClose }) => {
               return (
                 <div
                   key={subItem.id}
-                  className={`flex items-center p-4 pl-16 cursor-pointer text-sm transition-all duration-200 hover:bg-gray-100 active:bg-gray-200 ${
-                    isActive ? 'bg-yellow-50 text-gray-900 font-semibold border-r-4 border-yellow-500' : 'text-gray-700'
+                  className={`flex items-center mt-1 w-[200px] ml-8 px-4 py-3 pl-4 cursor-pointer text-xs transition-all duration-200 rounded-md border border-transparent hover:bg-gray-200 hover:border-gray-500 active:bg-gray-200 ${
+                    isActive ? 'bg-gray-200/60 text-gray-900 font-semibold rounded-md ' : 'text-gray-700'
                   }`}
                   onClick={() => handleSubItemClick(subItem.route)}
                 >
@@ -422,9 +423,17 @@ const MobileSidebarItem = ({ item, currentPath, onNavigate, onClose }) => {
 /**
  * The Mobile Sidebar Component - Only visible when hamburger menu is clicked
  */
-const MobileSidebar = ({ isOpen, setIsOpen }) => {
+const MobileSidebar = ({ isOpen, setIsOpen, onOpenChat }) => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const handleNavigation = (route) => {
+    if (route === '/live-chat') {
+      if (onOpenChat) onOpenChat();
+    } else {
+      navigate(route);
+    }
+  };
 
   // Close sidebar when route changes
   useEffect(() => {
@@ -471,7 +480,7 @@ const MobileSidebar = ({ isOpen, setIsOpen }) => {
 
       {/* Sidebar Panel */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-[75%] max-w-[280px] bg-white shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col ${
+        className={`fixed inset-y-0 left-0 z-50 w-[75%] max-w-[260px] bg-white shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
         role="dialog"
@@ -479,23 +488,23 @@ const MobileSidebar = ({ isOpen, setIsOpen }) => {
         aria-label="Navigation menu"
       >
         {/* Header with Logo and Close Button */}
-        <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white flex-shrink-0">
-          <img 
+        <div className="flex items-center justify-between px-4 py-2 border-b border-gray-200  flex-shrink:0">
+          {/* <img 
             src="/finCRM-logo-dark (1).png" 
             alt="FinCRM Logo" 
             className="h-8 w-auto" 
-          />
+          /> */}
           <button
             onClick={() => setIsOpen(false)}
-            className="p-2 text-gray-600 rounded-full hover:bg-gray-100 active:bg-gray-200 transition-colors"
+            className="p-2 text-gray-600 rounded-sm border border-transparent hover:bg-gray-200 hover:border-gray-500 active:bg-gray-200 transition-colors cursor-pointer"
             aria-label="Close navigation menu"
           >
-            <X className="w-6 h-6" />
+            <X className="h-4 w-4" />
           </button>
         </div>
 
         {/* Scrollable Navigation Area */}
-        <nav className="flex-1 overflow-y-auto overflow-x-hidden">
+        <nav className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-hide hover:scrollbar-thin hover:scrollbar-thumb-gray-400 hover:scrollbar-track-gray-100">
           {/* User Profile & Balance Section */}
           <div className="border-b border-gray-200">
             {/* User Profile Dropdown */}
@@ -512,18 +521,18 @@ const MobileSidebar = ({ isOpen, setIsOpen }) => {
                 key={item.id}
                 item={item}
                 currentPath={location.pathname}
-                onNavigate={navigate}
+                onNavigate={handleNavigation}
                 onClose={() => setIsOpen(false)}
               />
             ))}
           </div>
 
           {/* Footer */}
-          <div className="py-4 border-t border-gray-100 bg-gray-50">
+          {/* <div className="py-4 border-t border-gray-100 bg-gray-50">
             <div className="text-xs text-gray-400 text-center">
               FinCRM Trading Platform
             </div>
-          </div>
+          </div> */}
         </nav>
       </div>
     </>

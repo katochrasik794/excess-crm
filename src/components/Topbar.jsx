@@ -156,7 +156,7 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
   // Dummy Data
   const balanceValue = "0.00";
   const currency = "USD";
-  const accountType = "Investment wallet";
+  // const accountType = "Investment wallet";
   const accountId = "#1197981759115928122";
   const userEmail = "r*****1@ekuali.com";
   const hasNewNotifications = false;
@@ -230,10 +230,10 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
         <div className="lg:hidden mr-2">
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="p-2 text-gray-700 rounded-full hover:bg-gray-100 transition-colors"
+            className="p-2 text-gray-700 rounded-md hover:border cursor-pointer hover:bg-gray-100 hover:border-gray-500 transition-colors"
             aria-label="Toggle navigation menu"
           >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-4 h-4" />
           </button>
         </div>
 
