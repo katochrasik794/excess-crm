@@ -26,13 +26,30 @@ const DetailsPage = () => {
   // Use passed strategy or fallback/dummy
   // Ideally, you'd fetch by ID if location.state is missing
   const strategy = location.state?.strategy || {
+    id: id || 'default', // Ensure ID exists
     name: "Nghiên Forex X4", 
     returnRate: "1175%",
     rank: "1",
-    img: "", // fallback
+    img: "https://my.exness.com/st/media/user_photo/f7/f7fdf29da38742deb3b3c96dc4ffac88_340x210.jpg?v=8", // fixed missing image in default
     fee: "30%",
     investors: 7510
   };
+
+  React.useEffect(() => {
+      if (strategy && strategy.id) {
+          try {
+              const saved = JSON.parse(localStorage.getItem("recentlyViewedStrategies") || "[]");
+              // Remove if exists to move to top
+              const filtered = saved.filter(s => s.id !== strategy.id);
+              filtered.unshift(strategy);
+              // limit to 10
+              const newSaved = filtered.slice(0, 10);
+              localStorage.setItem("recentlyViewedStrategies", JSON.stringify(newSaved));
+          } catch (e) {
+              console.error("Failed to save recently viewed", e);
+          }
+      }
+  }, [strategy]);
 
   const handleBack = () => {
       navigate(-1);

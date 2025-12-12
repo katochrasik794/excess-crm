@@ -209,7 +209,7 @@ const TopContainer = () => {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   return (
-    <>
+    <div>
       {/* 1. Top Alert/Header Banner */}
       <div className="bg-[#fff9eb] py-5 mb-4 flex justify-center">
   <div className="w-full max-w-7xl px-2 md:px-8 lg:px-10 flex flex-col lg:flex-row justify-between items-start lg:items-center flex-wrap gap-y-4">
@@ -255,7 +255,7 @@ const TopContainer = () => {
         isOpen={isProfileModalOpen}
         onClose={() => setIsProfileModalOpen(false)}
       />
-    </>
+    </div>
   );
 };
 
