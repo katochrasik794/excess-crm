@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   X,
@@ -23,10 +23,13 @@ import {
   Copy,
   Pencil,
   Plus,
+  ArrowUpCircle,
+  ArrowDownCircle,
   ChevronsUpDown,
   List,
   Grid3X3,
   Smartphone,
+  Check,
 } from "lucide-react";
 
 import TopContainer from "../../components/TopContainer";
@@ -258,7 +261,7 @@ const ChangeTradingPasswordModal = ({ isOpen, onClose, mt5Login }) => {
         </div>
 
         {/* Footer (Action Button) */}
-        <div className="px-4 sm:px-5 md:px-6 py-2 flex justify-end">
+        <div className="px-4 sm:px-5 md:px-6 pb-8 pt-2 flex justify-end">
           <button
             onClick={() => console.log("Password Changed!")}
             disabled={!allRequirementsMet}
@@ -610,13 +613,341 @@ const TradingHoursModal = ({ isOpen, onClose }) => {
  * Account Dropdown Menu
  * This is the component that shows the menu items (Transfer funds, Adjust leverage, etc.)
  */
+
+
+/**
+ * Nickname Modal
+ */
+const NicknameModal = ({ isOpen, onClose, account }) => {
+  const [nickname, setNickname] = useState("");
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 backdrop-blur z-50 flex justify-center items-center p-4">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-[350px] sm:max-w-[400px] md:max-w-[450px] overflow-hidden flex flex-col">
+        {/* Header */}
+        <div className="p-4 sm:p-5 md:p-6 pb-2 flex justify-between items-start">
+          <h3 className="text-xl font-bold text-gray-900">Nickname</h3>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="px-4 sm:px-5 md:px-6 space-y-4">
+          <p className="text-sm font-semibold text-gray-700">
+            Account: <span className="text-gray-900">{account ? account.mt5Login.replace("#", "# ") : ""}</span>
+          </p>
+          <p className="text-sm text-gray-700">
+            Give this account a custom name to find it faster.
+          </p>
+
+          <div>
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Account nickname
+            </label>
+            <input
+              type="text"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              className="w-full border border-gray-300 rounded p-2 text-sm focus:ring-yellow-500 focus:border-yellow-500 outline-none"
+              placeholder="Give this account a custom name to find it faster."
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Nicknames can't contain special characters: {'<>\"&?^*#@'}
+            </p>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 sm:p-5 md:p-6 flex justify-end">
+          <button
+            onClick={() => {
+                console.log("Nickname saved:", nickname); 
+                onClose();
+            }}
+            className="bg-[#ffde02] text-gray-900 px-6 py-2 rounded font-medium hover:bg-yellow-500 transition-colors"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Account Settings Modal
+ */
+const AccountSettingsModal = ({ isOpen, onClose, account }) => {
+  if (!isOpen || !account) return null;
+
+  // Helper for rows
+  const SettingRow = ({ label, value, copy = false }) => (
+    <div className="flex justify-between items-center py-3 border-b border-gray-100 last:border-0 border-dashed">
+      <span className="text-sm font-medium text-gray-500">{label}</span>
+      <div className="flex items-center space-x-2">
+        <span className="text-sm font-base text-gray-900">{value}</span>
+        {copy && (
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(value);
+              // Maybe add a toast/tooltip here for feedback
+            }}
+            className="p-1 hover:bg-gray-100 rounded text-gray-400 hover:text-gray-600 transition-colors"
+            title="Copy"
+          >
+            <Copy className="w-4 h-4" />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="fixed inset-0 backdrop-blur z-50 flex justify-center items-center p-4">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-[350px] sm:max-w-[400px] md:max-w-[450px] overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200">
+        {/* Header */}
+        <div className="p-4 sm:p-5 md:p-6 pb-2 flex justify-between items-start">
+          <h3 className="text-xl font-bold text-gray-900">Settings</h3>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Subheader */}
+        <div className="px-4 sm:px-5 md:px-6 pb-2">
+          <p className="text-sm font-semibold text-gray-700">
+            Account: <span className="text-gray-900">{account.mt5Login.replace("#", "# ")}</span>
+          </p>
+        </div>
+
+        {/* Body (List) */}
+        <div className="px-4 sm:px-5 md:px-6 pb-6 pt-2">
+          <SettingRow label="Nickname" value="Raghvendra Singh" /> {/* Mocked per image */}
+          <SettingRow label="Type" value={account.accountType} />
+          <SettingRow label="Actual leverage" value={account.actualLeverage} />
+          <SettingRow label="Adjust leverage" value={account.adjustLeverage} />
+          <SettingRow label="Balance" value={account.balance || "0.00 USD"} />
+          <SettingRow label="Floating P/L" value={account.floatingPnL || "0.00 USD"} />
+          <SettingRow label="Server" value={account.server + "Real31"} copy /> {/* Appended Real31 to match image style slightly, or just use server */}
+          <SettingRow label="Login" value={account.mt5Login.replace("#", "")} copy />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Read Only Access Modal
+ */
+const ReadOnlyAccessModal = ({ isOpen, onClose, account }) => {
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  if (!isOpen || !account) return null;
+
+  // Password requirements
+  const requirements = [
+    {
+      label: "Between 8-15 characters",
+      check: password.length >= 8 && password.length <= 15,
+    },
+    {
+      label: "At least one upper and one lower case letter",
+      check: /[a-z]/.test(password) && /[A-Z]/.test(password),
+    },
+    {
+      label: "At least one number",
+      check: /\d/.test(password),
+    },
+    {
+      label: "At least one special character",
+      check: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+    },
+  ];
+
+  const allRequirementsMet = requirements.every((req) => req.check);
+
+  return (
+    <div className="fixed inset-0 backdrop-blur z-50 flex justify-center items-center p-4">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-[350px] sm:max-w-[400px] md:max-w-[450px] overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200">
+        {/* Header */}
+        <div className="p-4 sm:p-5 md:p-6 pb-2 flex justify-between items-start">
+          <h3 className="text-xl font-bold text-gray-900">Share read-only access</h3>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Subheader */}
+        <div className="px-4 sm:px-5 md:px-6 pb-4">
+          <p className="text-sm font-semibold text-gray-700 mb-2">
+            Account: <span className="text-gray-900">{account.mt5Login.replace("#", "# ")}</span>
+          </p>
+          <p className="text-sm text-gray-600 leading-relaxed">
+            You can share readonly access to your trading account to show
+            investors how you perform.
+          </p>
+        </div>
+
+        {/* Body (Input + Requirements) */}
+        <div className="px-4 sm:px-5 md:px-6 pb-6">
+          <div className="relative mb-3">
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full border border-gray-300 rounded p-2 pr-10 text-sm focus:ring-yellow-500 focus:border-yellow-500 outline-none"
+            />
+            <div
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+            >
+                {showPassword ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+            </div>
+          </div>
+
+          <ul className="space-y-1">
+            {requirements.map((req, index) => (
+              <li key={index} className="flex items-start space-x-2 text-xs text-gray-500">
+                <div className="mr-2 mt-0.5 w-4 h-4 flex items-center justify-center flex-shrink-0">
+                  {req.check ? (
+                    <Check className="w-3.5 h-3.5 text-green-600" />
+                  ) : (
+                    <div className="w-1.5 h-1.5 rounded-full border border-gray-400"></div>
+                  )}
+                </div>
+                <span className={req.check ? "text-green-600" : ""}>{req.label}</span>
+                 {index === 0 && <span className="ml-auto">{password.length}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Footer */}
+         <div className="p-4 sm:p-5 md:p-6 flex justify-end">
+          <button
+            disabled={!allRequirementsMet}
+             onClick={() => {
+                console.log("Read only access set");
+                onClose();
+             }}
+            className={`px-6 py-2 rounded font-medium transition-colors ${
+              allRequirementsMet 
+              ? "bg-[#ffde02] text-gray-900 hover:bg-yellow-500" 
+              : "bg-[#ffde02] text-gray-900 opacity-50 cursor-not-allowed"
+            }`}
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Manage Statements Modal
+ */
+const ManageStatementsModal = ({ isOpen, onClose, account }) => {
+  const [isChecked, setIsChecked] = useState(false);
+
+  if (!isOpen || !account) return null;
+
+  return (
+    <div className="fixed inset-0 backdrop-blur z-50 flex justify-center items-center p-4">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-[350px] sm:max-w-[400px] md:max-w-[450px] overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200">
+        {/* Header */}
+        <div className="p-4 sm:p-5 md:p-6 pb-2 flex justify-between items-start">
+          <h3 className="text-xl font-bold text-gray-900">Manage your statements</h3>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Subheader */}
+        <div className="px-4 sm:px-5 md:px-6 pb-2">
+          <p className="text-sm font-semibold text-gray-700">
+            Account: <span className="text-gray-900">{account.mt5Login.replace("#", "# ")}</span>
+          </p>
+        </div>
+
+        {/* content */}
+        <div className="px-4 sm:px-5 md:px-6 pb-6 pt-2 space-y-4">
+            <p className="text-sm text-gray-700">
+                Select the accounts for which you would like to receive email trading statements.
+            </p>
+
+            <div>
+                <p className="text-sm text-gray-700 mb-2">Send me statements:</p>
+                <div className="flex items-center space-x-2">
+                    <input 
+                        type="checkbox" 
+                        id="statement-checkbox"
+                        checked={isChecked}
+                        onChange={(e) => setIsChecked(e.target.checked)}
+                        className="w-4 h-4 text-yellow-500 bg-gray-100 border-gray-300 rounded focus:ring-yellow-500"
+                    />
+                    <label htmlFor="statement-checkbox" className="text-sm text-gray-700">
+                        Raghvendra Singh / {account.mt5Login.replace("#", "")}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 sm:p-5 md:p-6 flex justify-end">
+          <button
+            onClick={() => {
+                console.log("Statements saved:", isChecked);
+                onClose();
+            }}
+            className="bg-[#ffde02] text-gray-900 px-6 py-2 rounded font-medium hover:bg-yellow-500 transition-colors"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Account Dropdown Menu
+ * This is the component that shows the menu items (Transfer funds, Adjust leverage, etc.)
+ */
 const AccountDropdownMenu = ({
   account,
   isDemo,
   onPasswordChange,
   onAdjustLeverage,
+  onEditNickname,
+  onOpenSettings,
+  onSetReadOnly,
+  onManageStatements,
+  onArchive,
+  onRestore,
   onClose,
+  isArchived,
+  onTradeClick,
+  showHeaderActions,
 }) => {
+  const navigate = useNavigate(); // Hook for navigation
+
   // Action handler for "Change trading password"
   const handlePasswordChange = () => {
     onPasswordChange(account); // Pass the entire account object for context
@@ -629,7 +960,10 @@ const AccountDropdownMenu = ({
       label: "Transfer funds",
       icon: Repeat2,
       hideForDemo: true,
-      onClick: () => console.log("Transfer funds clicked"),
+      onClick: () => {
+        navigate("/transfer");
+        onClose();
+      },
     },
     {
       label: "Adjust leverage",
@@ -639,23 +973,23 @@ const AccountDropdownMenu = ({
     {
       label: "Add or edit nickname",
       icon: User,
-      onClick: () => console.log("Add or edit nickname clicked"),
+      onClick: () => { onEditNickname(account); onClose(); },
     },
     {
       label: "Settings",
       icon: Settings,
-      onClick: () => console.log("Settings clicked"),
+      onClick: () => { onOpenSettings(account); onClose(); },
     },
     {
       label: "Set read-only access",
       icon: Eye,
-      onClick: () => console.log("Set read-only access clicked"),
+      onClick: () => { onSetReadOnly(account); onClose(); },
     },
     {
       label: "Manage your statements",
       icon: File,
       hideForDemo: true,
-      onClick: () => console.log("Manage your statements clicked"),
+      onClick: () => { onManageStatements(account); onClose(); },
     },
     {
       label: "Change trading password",
@@ -665,15 +999,64 @@ const AccountDropdownMenu = ({
     {
       label: "Archive",
       icon: Archive,
-      onClick: () => console.log("Archive clicked"),
+      onClick: () => { onArchive(account); onClose(); },
+    },
+    {
+      label: "Restore",
+      icon: RotateCcw,
+      onClick: () => { onRestore(account); onClose(); },
     },
   ];
 
   return (
-    <div className="absolute right-0 top-10 w-60 bg-white rounded-xl shadow-2xl border border-gray-100 z-10 py-2 origin-top-right animate-in fade-in zoom-in-95">
+    <div className="absolute right-0 top-10 w-64 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 py-2 origin-top-right animate-in fade-in zoom-in-95">
+      {showHeaderActions && (
+        <div className="flex justify-around items-center px-2 pb-2 mb-2 border-b border-gray-100">
+           {/* Trade */}
+           <div className="flex flex-col items-center cursor-pointer group" onClick={() => { onTradeClick(account); onClose(); }}>
+              <div className="w-10 h-10 rounded-full bg-[#ffde02] flex items-center justify-center text-black mb-1 group-hover:bg-yellow-400 transition-colors">
+                 <ArrowRight className="w-5 h-5" />
+              </div>
+              <span className="text-xs text-gray-600 font-medium">Trade</span>
+           </div>
+           
+           {/* Deposit */}
+           {/* Only show Deposit/Withdraw for Real accounts or mimic logic? The image shows them. Detailed logic: isDemo? 
+               If isDemo, we usually show "Set Balance". But the user asked for "create same as it is".
+               In Grid View, "Set Balance" is missing from card too. 
+               Let's assume we show them. If Demo, maybe "Deposit" redirects to generic deposit or alerts. 
+               Actually, for Demo, usually we show "Set Balance". 
+               Let's follow the image structure for now. */}
+           <div className="flex flex-col items-center cursor-pointer group" onClick={() => { navigate("/deposit"); onClose(); }}>
+              <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 mb-1 group-hover:bg-gray-200 transition-colors">
+                 <ArrowDownCircle className="w-5 h-5" />
+              </div>
+              <span className="text-xs text-gray-600 font-medium">Deposit</span>
+           </div>
+
+           {/* Withdraw */}
+           <div className="flex flex-col items-center cursor-pointer group" onClick={() => { navigate("/withdraw"); onClose(); }}>
+              <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 mb-1 group-hover:bg-gray-200 transition-colors">
+                 <ArrowUpCircle className="w-5 h-5" />
+              </div>
+              <span className="text-xs text-gray-600 font-medium">Withdraw</span>
+           </div>
+        </div>
+      )}
       <ul className="divide-y divide-gray-50">
         {menuItems
-          .filter((item) => !isDemo || !item.hideForDemo) // Filter items if it's a Demo account
+          .filter((item) => {
+             // Logic to filter menu items based on account state
+             if (isArchived) {
+                 // specific items for archived
+                 if (item.label === 'Archive') return false;
+                 if (item.label === 'Restore') return true;
+             } else {
+                 // specific items for non-archived
+                 if (item.label === 'Restore') return false;
+             }
+             return !isDemo || !item.hideForDemo;
+          }) // Filter items logic
           .map((item) => (
             <li key={item.label}>
               <button
@@ -702,6 +1085,12 @@ const AccountCard = ({
   onPasswordChange,
   onSetBalance,
   onAdjustLeverage,
+  onEditNickname,
+  onOpenSettings,
+  onSetReadOnly,
+  onManageStatements,
+  onArchive,
+  onRestore,
 }) => {
   // Use navigation inside this card so buttons can redirect
   const navigate = useNavigate();
@@ -830,16 +1219,30 @@ const AccountCard = ({
   );
 
   // Render Grid View
-  if (isGridView && !isArchived) {
+  if (isGridView) {
+    const gridRows = [
+      { label: "Number", value: account.mt5Login.replace("#", "") },
+      { label: "Platform", value: account.platform },
+      { label: "Type", value: account.accountType },
+      { label: "Server", value: account.server + (isDemo ? "Demo" : "Real31") }, 
+      { label: "Free margin", value: account.freeMargin || "0.00 USD" },
+      { label: "Actual leverage", value: account.actualLeverage },
+      { label: "Adjust leverage", value: account.adjustLeverage },
+    ];
     return (
-      <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 flex flex-col space-y-4">
-        {/* Header - Top Row */}
-        <div className="flex justify-between items-center">
-          {/* Account Type/Login */}
-          <div className="flex items-center space-x-2 text-sm font-semibold text-gray-900">
-            <span>{isDemo ? "Demo" : "Real"}</span>
-            <span className="text-gray-400">|</span>
-            <span>{account.accountType}</span>
+      <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 flex flex-col space-y-4 relative">
+        {/* Header */}
+        <div className="flex justify-between items-center p-4 pb-2 border-b border-gray-100 border-dashed">
+          <div className="flex items-center space-x-2">
+             <span className="bg-gray-100 text-gray-600 text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded">
+               {isDemo ? "Demo" : "Real"}
+             </span>
+             <span className="bg-gray-100 text-gray-600 text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded">
+               {account.platform === "MT5" ? "CT" : "MT5"}
+             </span>
+             <span className="font-bold text-sm text-gray-900 truncate max-w-[120px]" title="Raghvendra Singh">
+               Raghvendra Singh
+             </span>
           </div>
 
           {/* Ellipsis Menu Button - This is the button the user is asking about */}
@@ -860,42 +1263,31 @@ const AccountCard = ({
                 isDemo={isDemo}
                 onPasswordChange={onPasswordChange}
                 onAdjustLeverage={onAdjustLeverage}
+                onEditNickname={onEditNickname}
+                onOpenSettings={onOpenSettings}
+                onSetReadOnly={onSetReadOnly}
+                onManageStatements={onManageStatements}
+                onArchive={onArchive}
+                onRestore={onRestore}
+                isArchived={isArchived}
+                showHeaderActions={true}
+                onTradeClick={onTradeClick}
                 onClose={() => setIsMenuOpen(false)}
               />
             )}
           </div>
         </div>
 
-        {/* Balance */}
-        <Balance
-          value={account.balance}
-          className="pt-2 text-3xl font-extrabold text-gray-900"
-        />
-
-        {/* Detailed Stats in Grid Format */}
-        <div className="pt-2 border-t border-gray-100">
-          <GridStatsStack stats={statsList} />
-        </div>
-
-        {/* Footer Actions (Deposit/Withdraw/Trade) */}
-        <div className="flex justify-between items-center pt-4 border-t border-gray-100 space-x-3">
-          <ActionButton
-            label="Trade"
-            primary
-            Icon={ArrowRight}
-            onClick={() => onTradeClick(account)}
-          />
-          {isDemo ? (
-            <ActionButton
-              label="Set Balance"
-              onClick={() => onSetBalance && onSetBalance(account)}
-            />
-          ) : (
-            <ActionButton
-              label="Deposit"
-              onClick={() => navigate("/deposit")}
-            />
-          )}
+        {/* Body Rows */}
+        <div className="p-4 pt-2 space-y-3">
+           {gridRows.map((row) => (
+             <div key={row.label} className="flex justify-between items-end text-xs sm:text-sm group relative">
+               <div className="text-gray-500 bg-white z-10 pr-1">{row.label}</div>
+               {/* Dotted Leader */}
+               <div className="flex-1 border-b border-dotted border-gray-300 mb-1 mx-1"></div>
+               <div className="text-gray-900 font-medium bg-white z-10 pl-1">{row.value}</div>
+             </div>
+           ))}
         </div>
       </div>
     );
@@ -937,7 +1329,11 @@ const AccountCard = ({
               {account.reason}
             </span>
           </div>
-          <ActionButton label="Restore" Icon={RotateCcw} />
+          <ActionButton
+            label="Restore"
+            Icon={RotateCcw}
+            onClick={() => onRestore(account)}
+          />
         </div>
       </div>
     );
@@ -1005,28 +1401,37 @@ const AccountCard = ({
                 />
               )}
 
-              {/* Ellipsis Menu Button */}
-              <button
-                title="More Options"
-                onClick={(e) => {
-                  e.stopPropagation(); // Prevent card collapse when clicking menu button
-                  setIsMenuOpen(!isMenuOpen);
-                }}
-                className="p-2 rounded-lg text-gray-700 bg-gray-200/50 hover:bg-gray-100 hover:border-gray-500 border border-gray-200"
-              >
-                <EllipsisVertical className="w-5 h-5" />
-              </button>
+              {/* Ellipsis Menu Button Wrapper */}
+              <div className="relative">
+                <button
+                  title="More Options"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent card collapse when clicking menu button
+                    setIsMenuOpen(!isMenuOpen);
+                  }}
+                  className="p-2 rounded-lg text-gray-700 bg-gray-200/50 hover:bg-gray-100 hover:border-gray-500 border border-gray-200"
+                >
+                  <EllipsisVertical className="w-5 h-5" />
+                </button>
 
-              {/* Dropdown Menu */}
-              {isMenuOpen && (
-                <AccountDropdownMenu
-                  account={account} // Pass the account details
-                  isDemo={isDemo}
-                  onPasswordChange={onPasswordChange} // Pass the new handler
-                  onAdjustLeverage={onAdjustLeverage}
-                  onClose={() => setIsMenuOpen(false)}
-                />
-              )}
+                {/* Dropdown Menu */}
+                {isMenuOpen && (
+                  <AccountDropdownMenu
+                    account={account} // Pass the account details
+                    isDemo={isDemo}
+                    onPasswordChange={onPasswordChange} // Pass the new handler
+                    onAdjustLeverage={onAdjustLeverage}
+                    onEditNickname={onEditNickname}
+                    onOpenSettings={onOpenSettings}
+                    onSetReadOnly={onSetReadOnly}
+                    onManageStatements={onManageStatements}
+                    onArchive={onArchive}
+                    onRestore={onRestore}
+                    isArchived={isArchived}
+                    onClose={() => setIsMenuOpen(false)}
+                  />
+                )}
+              </div>
             </div>
           </div>
 
@@ -1069,12 +1474,19 @@ const MyAccount = () => {
   // 'Real' is the default active tab
   const [activeTab, setActiveTab] = useState("Real");
   const [viewMode, setViewMode] = useState("list");
+  const [sortBy, setSortBy] = useState("Newest");
+  const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
 
   // Accounts state (so we can update balances)
   const [accountsData, setAccountsData] = useState(() => {
     const saved = localStorage.getItem('exness_accounts');
     return saved ? JSON.parse(saved) : mockAccounts;
   });
+
+  // Persist accountsData to localStorage
+  useEffect(() => {
+    localStorage.setItem('exness_accounts', JSON.stringify(accountsData));
+  }, [accountsData]);
 
   // Set Balance modal state
   const [isSetBalanceOpen, setIsSetBalanceOpen] = useState(false);
@@ -1091,6 +1503,14 @@ const MyAccount = () => {
   const [passwordAccountDetails, setPasswordAccountDetails] = useState(null);
   const [isAdjustLeverageOpen, setIsAdjustLeverageOpen] = useState(false);
   const [selectedAccountForLeverage, setSelectedAccountForLeverage] = useState(null);
+  const [isNicknameModalOpen, setIsNicknameModalOpen] = useState(false);
+  const [selectedAccountForNickname, setSelectedAccountForNickname] = useState(null);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [selectedAccountForSettings, setSelectedAccountForSettings] = useState(null);
+  const [isReadOnlyModalOpen, setIsReadOnlyModalOpen] = useState(false);
+  const [selectedAccountForReadOnly, setSelectedAccountForReadOnly] = useState(null);
+  const [isStatementsModalOpen, setIsStatementsModalOpen] = useState(false);
+  const [selectedAccountForStatements, setSelectedAccountForStatements] = useState(null);
 
   // Handler for opening the Password Change Modal
   const handlePasswordChange = (account) => {
@@ -1140,8 +1560,92 @@ const MyAccount = () => {
     setIsAdjustLeverageOpen(true);
   };
 
-  // Get the accounts corresponding to the active tab
-  const accountsToDisplay = accountsData[activeTab] || [];
+  // Handler for Nickname Modal
+  const handleEditNickname = (account) => {
+    setSelectedAccountForNickname(account);
+    setIsNicknameModalOpen(true);
+  };
+
+  // Handler for Settings Modal
+  const handleOpenSettings = (account) => {
+    setSelectedAccountForSettings(account);
+    setIsSettingsModalOpen(true);
+  };
+
+  // Handler for Read Only Modal
+  const handleSetReadOnly = (account) => {
+      setSelectedAccountForReadOnly(account);
+      setIsReadOnlyModalOpen(true);
+  };
+
+  // Handler for Manage Statements Modal
+  const handleManageStatements = (account) => {
+    setSelectedAccountForStatements(account);
+    setIsStatementsModalOpen(true);
+  };
+
+  // Handler for Archiving Account
+  const handleArchiveAccount = (account) => {
+    if (activeTab === "Archived") return;
+    setAccountsData((prev) => {
+        const updated = { ...prev };
+        updated[activeTab] = updated[activeTab].filter(a => a.id !== account.id);
+        const archivedAccount = { 
+            ...account, 
+            reason: "Archived by user" 
+        };
+        updated.Archived = [archivedAccount, ...updated.Archived];
+        return updated;
+    });
+  };
+
+  // Handler for Restoring Account
+  const handleRestoreAccount = (account) => {
+    if (activeTab !== "Archived") return;
+    setAccountsData((prev) => {
+        const updated = { ...prev };
+        // Remove from Archived
+        updated.Archived = updated.Archived.filter(a => a.id !== account.id);
+        
+        // Add back to Real (or Demo if type suggests, but user asked for Real tab specifically)
+        // Let's try to be smart: if accountType is 'Demo', put in Demo, else Real.
+        const targetTab = account.accountType === 'Demo' ? 'Demo' : 'Real';
+        
+        // Remove the 'reason' property we added when archiving
+        const { reason, ...restoredAccount } = account;
+        
+        updated[targetTab] = [restoredAccount, ...updated[targetTab]];
+        return updated;
+    });
+  };
+
+  // Get the accounts corresponding to the active tab and apply sorting
+  const accountsToDisplay = React.useMemo(() => {
+    const accounts = accountsData[activeTab] || [];
+    let sorted = [...accounts];
+
+    if (sortBy === "Newest") {
+       // Assuming 'accounts' are stored with newest first (unshift). 
+       // If not, we might need an ID or Date check. 
+       // For this implementation, we assume the array order represents newest first.
+       // No action needed if already sorted by newest.
+    } else if (sortBy === "Oldest") {
+       sorted.reverse();
+    } else if (sortBy === "Free margin") {
+       sorted.sort((a, b) => {
+          const valA = parseFloat((a.freeMargin || "0").replace(/[^0-9.-]+/g, ""));
+          const valB = parseFloat((b.freeMargin || "0").replace(/[^0-9.-]+/g, ""));
+          return valB - valA; // Descending
+       });
+    } else if (sortBy === "Nickname") {
+       sorted.sort((a, b) => {
+          const nameA = a.nickname || a.accountType || "";
+          const nameB = b.nickname || b.accountType || "";
+          return nameA.localeCompare(nameB);
+       });
+    }
+    return sorted;
+  }, [accountsData, activeTab, sortBy]);
 
   // Tab Item component
   const TabItem = ({ name }) => (
@@ -1197,7 +1701,7 @@ const MyAccount = () => {
 
         {/* 3. My Accounts Section Header */}
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl lg:text-[32px] font-semibold text-gray-900">
+          <h2 className="text-2xl lg:text-[32px] text-gray-900">
             My accounts
           </h2>
           <button
@@ -1223,11 +1727,30 @@ const MyAccount = () => {
         <div className="flex items-center space-x-4 py-6 justify-between ">
           {/* Sort Dropdown */}
           <div className="relative">
-            <button className="flex items-center space-x-1 px-6  gap-8  py-1.5 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50">
-              <span>Newest</span>
+            <button 
+                onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
+                className="flex items-center space-x-1 px-6  gap-8  py-1.5 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 bg-white"
+            >
+              <span>{sortBy}</span>
               <ChevronsUpDown className="w-3.5 h-3.5" />
             </button>
-            {/* Dropdown Menu Placeholder */}
+            {/* Dropdown Menu */}
+            {isSortDropdownOpen && (
+                <div className="absolute top-full left-0 mt-1 w-full min-w-[140px] bg-white rounded-lg shadow-xl border border-gray-200 z-50 py-1 flex flex-col">
+                    {["Newest", "Oldest", "Free margin", "Nickname"].map((option) => (
+                        <button
+                            key={option}
+                            className={`text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors ${sortBy === option ? 'font-medium text-black bg-gray-50' : 'text-gray-600'}`}
+                            onClick={() => {
+                                setSortBy(option);
+                                setIsSortDropdownOpen(false);
+                            }}
+                        >
+                            {option}
+                        </button>
+                    ))}
+                </div>
+            )}
           </div>
 
           {/* View Mode Toggle */}
@@ -1275,6 +1798,12 @@ const MyAccount = () => {
               onPasswordChange={handlePasswordChange}
               onSetBalance={handleOpenSetBalance}
               onAdjustLeverage={handleAdjustLeverage}
+              onEditNickname={handleEditNickname}
+              onOpenSettings={handleOpenSettings}
+              onSetReadOnly={handleSetReadOnly}
+              onManageStatements={handleManageStatements}
+              onArchive={handleArchiveAccount}
+              onRestore={handleRestoreAccount}
             />
           ))}
         </div>
@@ -1319,6 +1848,34 @@ const MyAccount = () => {
           isOpen={isAdjustLeverageOpen}
           onClose={() => setIsAdjustLeverageOpen(false)}
           accountId={selectedAccountForLeverage?.mt5Login.replace('#', '')}
+        />
+
+        {/* Nickname Modal */}
+        <NicknameModal
+          isOpen={isNicknameModalOpen}
+          onClose={() => setIsNicknameModalOpen(false)}
+          account={selectedAccountForNickname}
+        />
+
+        {/* Settings Modal */}
+        <AccountSettingsModal
+          isOpen={isSettingsModalOpen}
+          onClose={() => setIsSettingsModalOpen(false)}
+          account={selectedAccountForSettings}
+        />
+
+        {/* Read Only Access Modal */}
+        <ReadOnlyAccessModal
+            isOpen={isReadOnlyModalOpen}
+            onClose={() => setIsReadOnlyModalOpen(false)}
+            account={selectedAccountForReadOnly}
+        />
+
+        {/* Manage Statements Modal */}
+        <ManageStatementsModal
+          isOpen={isStatementsModalOpen}
+          onClose={() => setIsStatementsModalOpen(false)}
+          account={selectedAccountForStatements}
         />
       </div>
 

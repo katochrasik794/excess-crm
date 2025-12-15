@@ -220,7 +220,7 @@ const TopContainer = () => {
         <FiUser className="w-8 h-8 px-1 py-1 md:w-10 md:h-10 text-gray-700 rounded-full border-4 border-gray-200" />
       </div>
 
-      <p className="text-sm md:text-lg font-medium text-gray-800">
+      <p className="text-sm md:text-md font-medium text-gray-800">
         Hello. Fill in your account details to make your first deposit
       </p>
     </div>

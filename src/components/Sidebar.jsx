@@ -117,7 +117,7 @@ const SidebarItem = ({ item, isExpanded, currentPath, onNavigate }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full pt-2">
       {/* Menu Item Header */}
       <div
         className={`${baseClasses} ${isExpanded ? expandedClasses : collapsedClasses} ${activeClasses} ${item.subItems?.length === 0 ? 'mb-1' : ''}`}
@@ -189,7 +189,7 @@ const Sidebar = ({ isExpanded, setIsExpanded, isSidebarOpen, setIsSidebarOpen })
     setIsHoveredOpen(false);
   };
 
-  const widthClass = isExpanded ? 'w-70' : 'w-13';
+  const widthClass = isExpanded ? 'w-62' : 'w-13';
   const controlLabel = isExpanded ? '' : '';
 
   return (

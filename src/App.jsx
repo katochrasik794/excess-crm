@@ -27,6 +27,7 @@ import AnalystView from './pages/Analytics/AnalystView'
 import MarketNews from './pages/Analytics/MarketNews'
 import CopyTrading from './pages/Copy_Trading/CopyTrading'
 import DetailsPage from './pages/Copy_Trading/DetailsPage'
+import CreateStrategy from './pages/Copy_Trading/CreateStrategy'
 import AccountSecurity from './components/AccountSecurity'
 import ExnessPlatforms from './components/ExnessPlatforms'
 
@@ -104,6 +105,7 @@ const App = () => {
               <Route path="/pa/support_hub/help_center/complaints/new/trading" element={<Trading_ />} />
               <Route path="/pa/support_hub/help_center/complaints/new/exness-programs" element={<ExnessPrograms />} />
               <Route path="/pa/support_hub/help_center/complaints/new/vps" element={<Vps />} />
+              <Route path="/copy-trading/create" element={<CreateStrategy />} />
               <Route path="/copy-trading/:id" element={<DetailsPage />} />
             </Routes>
           </main>
