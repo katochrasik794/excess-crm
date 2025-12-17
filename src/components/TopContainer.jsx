@@ -229,14 +229,14 @@ const TopContainer = () => {
     <div className="flex space-x-3">
       <button
         onClick={() => setIsVerificationModalOpen(true)}
-        className="text-sm font-medium text-gray-900 hover:underline bg-[#d5d7d966] px-3 py-2 rounded-sm"
+        className="text-sm font-medium text-gray-900 hover:underline bg-[#d5d7d966] px-3 py-2 rounded-sm cursor-pointer"
       >
         Learn more
       </button>
 
       <button
         onClick={() => setIsProfileModalOpen(true)}
-        className="bg-[#ffde02] text-gray-900 px-4 py-2 rounded-sm text-sm hover:bg-yellow-500 transition-colors"
+        className="bg-[#ffde02] text-gray-900 px-4 py-2 rounded-sm text-sm hover:bg-yellow-500 transition-colors cursor-pointer"
       >
         Complete profile
       </button>

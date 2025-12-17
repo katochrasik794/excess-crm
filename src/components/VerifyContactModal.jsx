@@ -100,7 +100,7 @@ const VerifyContactModal = ({ isOpen, onClose }) => {
             {/* Primary Button */}
             <button
               onClick={onClose}
-              className="w-full py-[6px] bg-[#ffde02] text-gray-900 font-semibold text-md rounded-sm shadow-lg hover:bg-yellow-300/80 transition duration-200 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-opacity-50"
+              className="w-full py-[6px] bg-[#ffde02] text-gray-900 font-semibold text-md rounded-sm shadow-lg hover:bg-yellow-300/80 transition duration-200 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-opacity-50 cursor-pointer"
             >
               Get started now
             </button>
@@ -108,7 +108,7 @@ const VerifyContactModal = ({ isOpen, onClose }) => {
             {/* Secondary Button */}
             <button
               onClick={onClose}
-              className="w-full py-[6px] bg-gray-100 text-gray-700 font-semibold text-md rounded-sm hover:bg-gray-200 transition duration-200 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-opacity-50"
+              className="w-full py-[6px] bg-gray-100 text-gray-700 font-semibold text-md rounded-sm hover:bg-gray-200 transition duration-200 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-opacity-50 cursor-pointer"
             >
               Do it later
             </button>

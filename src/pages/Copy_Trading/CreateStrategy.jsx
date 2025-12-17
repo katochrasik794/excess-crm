@@ -484,7 +484,7 @@ const CreateStrategy = () => {
                         <div className="flex justify-end gap-3 pt-4">
                             <button 
                                 onClick={handleBack}
-                                className="px-6 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium rounded transition-colors"
+                                className="px-6 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium rounded transition-colors cursor-pointer"
                             >
                                 Back
                             </button>
@@ -492,7 +492,7 @@ const CreateStrategy = () => {
                             {currentStep !== 2 && (
                                 <button 
                                     onClick={handleNext}
-                                    className="px-6 py-2 bg-[#ffd200] hover:bg-[#ffde02] text-black font-semibold rounded transition-colors"
+                                    className="px-6 py-2 bg-[#ffd200] hover:bg-[#ffde02] text-black font-semibold rounded transition-colors cursor-pointer"
                                 >
                                     Continue
                                 </button>

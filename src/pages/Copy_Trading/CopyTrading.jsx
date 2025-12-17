@@ -1957,7 +1957,7 @@ const CopyTrading = () => {
                           activeTab === "discover"
                             ? "border-b-2 border-gray-900 font-medium text-gray-900"
                             : "text-gray-500 hover:text-gray-900"
-                        }`}
+                        } cursor-pointer`}
                       >
                         Discover strategies
                       </button>
@@ -1965,7 +1965,7 @@ const CopyTrading = () => {
                         onClick={() => setActiveTab("favorites")}
                         className={`pb-3 ${
                           activeTab === "favorites" ? "-mb-[1px] border-b-2 border-gray-900 font-medium text-gray-900" : "text-gray-500 hover:text-gray-900"
-                        }`}
+                        } cursor-pointer`}
                       >
                         Favorites
                       </button>
@@ -1973,7 +1973,7 @@ const CopyTrading = () => {
                         onClick={() => setActiveTab("assets")}
                         className={`pb-3 ${
                           activeTab === "assets" ? "-mb-[1px] border-b-2 border-gray-900 font-medium text-gray-900" : "text-gray-500 hover:text-gray-900"
-                        }`}
+                        } cursor-pointer`}
                       >
                         Assets
                       </button>
@@ -1981,7 +1981,7 @@ const CopyTrading = () => {
                         onClick={() => setActiveTab("mycopy")}
                         className={`pb-3 ${
                           activeTab === "mycopy" ? "-mb-[1px] border-b-2 border-gray-900 font-medium text-gray-900" : "text-gray-500 hover:text-gray-900"
-                        }`}
+                        } cursor-pointer`}
                       >
                         My copy strategies
                       </button>
@@ -1991,42 +1991,42 @@ const CopyTrading = () => {
                   {/* Filter pills (only show on Discover tab) */}
                   {activeTab === "discover" && (
                     <div className="flex gap-3 overflow-x-auto pb-2 mb-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                      <button 
+                      <button
                             onClick={handleOpenAllStrategiesAll}
-                            className="px-4 py-2 rounded-full border border-gray-300 text-xs whitespace-nowrap text-sm text-gray-800 hover:text-gray-900 flex items-center gap-1"
+                            className="px-4 py-2 rounded-full border border-gray-300 text-xs whitespace-nowrap text-sm text-gray-800 hover:text-gray-900 flex items-center gap-1 cursor-pointer bg-gray-200"
                         >
                           All strategies
                         </button>
                       <button
-                          className="px-4 py-2 rounded-full border border-gray-300 text-xs whitespace-nowrap text-sm text-gray-800 hover:text-gray-900 flex items-center gap-1"
+                          className="px-4 py-2 rounded-full border border-gray-300 text-xs whitespace-nowrap text-sm text-gray-800 hover:text-gray-900 flex items-center gap-1 cursor-pointer bg-gray-200"
                           onClick={handleOpenAll}
                         >
                           Most Copied
                         </button>
-                      <button onClick={handleOpenRecentlyAll} className="px-4 py-2 rounded-full border border-gray-300 text-xs whitespace-nowrap text-sm text-gray-800 hover:text-gray-900 flex items-center gap-1">
+                      <button onClick={handleOpenRecentlyAll} className="px-4 py-2 rounded-full border border-gray-300 text-xs whitespace-nowrap text-sm text-gray-800 hover:text-gray-900 flex items-center gap-1 cursor-pointer bg-gray-200">
                          Recently viewed
                         </button>
-                      <button 
+                      <button
                             onClick={handleOpenModerateAll}
-                            className="px-4 py-2 rounded-full border border-gray-300 text-xs whitespace-nowrap text-sm text-gray-800 hover:text-gray-900 flex items-center gap-1"
+                            className="px-4 py-2 rounded-full border border-gray-300 text-xs whitespace-nowrap text-sm text-gray-800 hover:text-gray-900 flex items-center gap-1 cursor-pointer bg-gray-200"
                         >
                           Return with Moderate Drawdown
                         </button>
-                      <button 
+                      <button
                             onClick={handleOpenBestReturnAll}
-                            className="px-4 py-2 rounded-full border border-gray-300 text-xs whitespace-nowrap text-sm text-gray-800 hover:text-gray-900 flex items-center gap-1"
+                            className="px-4 py-2 rounded-full border border-gray-300 text-xs whitespace-nowrap text-sm text-gray-800 hover:text-gray-900 flex items-center gap-1 cursor-pointer bg-gray-200"
                         >
                           Best Return for 3 months
                         </button>
-                      <button 
+                      <button
                             onClick={handleOpenLowFeeAll}
-                            className="px-4 py-2 rounded-full border border-gray-300 text-xs whitespace-nowrap text-sm text-gray-800 hover:text-gray-900 flex items-center gap-1"
+                            className="px-4 py-2 rounded-full border border-gray-300 text-xs whitespace-nowrap text-sm text-gray-800 hover:text-gray-900 flex items-center gap-1 cursor-pointer bg-gray-200"
                         >
                           Low Fee
                         </button>
-                      <button 
+                      <button
                             onClick={handleOpenNewStrategiesAll}
-                            className="px-4 py-2 rounded-full border border-gray-300 text-xs whitespace-nowrap text-sm text-gray-800 hover:text-gray-900 flex items-center gap-1"
+                            className="px-4 py-2 rounded-full border border-gray-300 text-xs whitespace-nowrap text-sm text-gray-800 hover:text-gray-900 flex items-center gap-1 cursor-pointer bg-gray-200"
                         >
                           New Strategies
                         </button>
@@ -2040,7 +2040,7 @@ const CopyTrading = () => {
                       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                         <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Most Copied</h2>
                         <button
-                          className="text-sm text-gray-500 hover:text-gray-900 flex items-center gap-1"
+                          className="text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-100 border border-transparent hover:border-gray-300 rounded-sm px-2 py-1 flex items-center gap-1 cursor-pointer"
                           onClick={handleOpenAll}
                         >
                           See all
@@ -2105,7 +2105,19 @@ const CopyTrading = () => {
                       </div>
 
                       {favoriteItems.length === 0 ? (
-                        <div className="p-6 bg-white rounded-lg border border-gray-100 text-sm text-gray-500">No favorites yet</div>
+                        <div className="flex flex-col items-center justify-center p-10 bg-white min-h-[300px]">
+                            <div className="text-gray-300 mb-4">
+                                <FiStar className="w-16 h-16 stroke-1" />
+                            </div>
+                            <h3 className="text-lg font-medium text-gray-900 mb-2">No favorites yet</h3>
+                            <p className="text-gray-500 mb-6 text-sm">When you save strategies to favorites, they will appear here</p>
+                            <button 
+                                onClick={() => setActiveTab('discover')}
+                                className="bg-[#ffd200] hover:bg-[#ffde02] text-black font-medium px-6 py-2 rounded-lg transition-colors cursor-pointer"
+                            >
+                                Discover strategies
+                            </button>
+                        </div>
                       ) : (
                         <div className="space-y-3">
                           {favoriteItems.map((s, idx) => (
@@ -2174,7 +2186,7 @@ const CopyTrading = () => {
                             <p className="text-gray-500 mb-6 text-sm">When you start investing, investments will appear here</p>
                             <button 
                                 onClick={() => setActiveTab('discover')}
-                                className="bg-[#ffd200] hover:bg-[#ffde02] text-black font-medium px-6 py-2 rounded-lg transition-colors"
+                                className="bg-[#ffd200] hover:bg-[#ffde02] text-black font-medium px-6 py-2 rounded-lg transition-colors cursor-pointer"
                             >
                                 Discover strategies
                             </button>
@@ -2199,13 +2211,13 @@ const CopyTrading = () => {
                                 <div className="flex items-center gap-2">
                                     <button 
                                         onClick={() => navigate('/deposit')}
-                                        className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 rounded-lg text-sm transition-colors"
+                                        className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 rounded-lg text-sm transition-colors cursor-pointer"
                                     >
                                         Deposit
                                     </button>
                                     <button 
                                         onClick={() => navigate('/withdraw')}
-                                        className="flex-1 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg text-sm transition-colors"
+                                        className="flex-1 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg text-sm transition-colors cursor-pointer"
                                     >
                                         Withdraw
                                     </button>
@@ -2233,7 +2245,7 @@ const CopyTrading = () => {
                         <h3 className="text-sm sm:text-base font-semibold text-gray-900">Best strategy by return per 3 months</h3>
                       </div>
 
-                      <div className=" px-4 py-1 flex flex-col sm:flex-row items-center justify-between gap-4 hover:shadow-sm transition-shadow">
+                      <div className=" px-4 py-1 flex flex-col sm:flex-row items-center justify-between gap-4 transition-shadow">
                           <div className="flex items-center gap-3 w-full sm:w-auto">
                               <img
                                 src={bestStrategy.img}
@@ -2255,7 +2267,10 @@ const CopyTrading = () => {
                               >
                                 Details
                               </button>
-                              <button className="flex-1 sm:flex-none px-4 py-2 bg-[#ffd200] hover:bg-[#ffca00] text-gray-900 text-xs sm:text-sm font-semibold rounded-lg transition whitespace-nowrap">
+                              <button 
+                                onClick={(e) => { e.stopPropagation(); navigate(`/copy-trading/${bestStrategy.id}`, { state: { strategy: bestStrategy, autoInvest: true, fixedAmount: 10 } }); }}
+                                className="flex-1 sm:flex-none px-4 py-2 bg-[#ffd200] hover:bg-[#ffca00] text-gray-900 text-xs sm:text-sm font-semibold rounded-lg transition whitespace-nowrap"
+                              >
                                 Invest 10 USD
                               </button>
                           </div>
@@ -2268,7 +2283,7 @@ const CopyTrading = () => {
                     <div className="mb-10">
                       <div className="flex items-center justify-between mb-5">
                         <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Recently viewed</h2>
-                        <button onClick={handleOpenRecentlyAll} className="text-sm text-gray-500 hover:text-gray-900 flex items-center gap-1">
+                        <button onClick={handleOpenRecentlyAll} className="text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-100 border border-transparent hover:border-gray-300 rounded-sm px-2 py-1 flex items-center gap-1 cursor-pointer">
                          See all
                          <FiChevronRight />
                         </button>
@@ -2305,7 +2320,7 @@ const CopyTrading = () => {
                     <div className="mb-6">
                       <div className="flex items-center justify-between mb-3">
                         <h3 className="text-sm sm:text-base font-semibold text-gray-900">By currency</h3>
-                        <button onClick={handleOpenCurrencyAll} className="text-sm text-gray-500 hover:text-gray-900 flex items-center gap-1">
+                        <button onClick={handleOpenCurrencyAll} className="text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-100 border border-transparent hover:border-gray-300 rounded-sm px-2 py-1 flex items-center gap-1 cursor-pointer">
                           See all
                           <FiChevronRight className="text-lg leading-none" />
                         </button>
@@ -2344,9 +2359,9 @@ const CopyTrading = () => {
                     <div className="mb-10">
                        <div className="flex items-center justify-between mb-4">
                         <h3 className="text-sm sm:text-base font-semibold text-gray-900">Return with Moderate Drawdown</h3>
-                        <button 
+                        <button
                             onClick={handleOpenModerateAll}
-                            className="text-sm text-gray-500 hover:text-gray-900 flex items-center gap-1"
+                            className="text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-100 border border-transparent hover:border-gray-300 rounded-sm px-2 py-1 flex items-center gap-1 cursor-pointer"
                         >
                           See all
                           <FiChevronRight className="text-lg leading-none" />
@@ -2414,9 +2429,9 @@ const CopyTrading = () => {
                     <div className="mb-10">
                        <div className="flex items-center justify-between mb-4">
                         <h3 className="text-sm sm:text-base font-semibold text-gray-900">Best Return for 3 months</h3>
-                        <button 
+                        <button
                             onClick={handleOpenBestReturnAll}
-                            className="text-sm text-gray-500 hover:text-gray-900 flex items-center gap-1"
+                            className="text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-100 border border-transparent hover:border-gray-300 rounded-sm px-2 py-1 flex items-center gap-1 cursor-pointer"
                         >
                           See all
                           <FiChevronRight className="text-lg leading-none" />
@@ -2484,9 +2499,9 @@ const CopyTrading = () => {
                     <div className="mb-10">
                        <div className="flex items-center justify-between mb-4">
                         <h3 className="text-sm sm:text-base font-semibold text-gray-900">Low Fee</h3>
-                        <button 
+                        <button
                             onClick={handleOpenLowFeeAll}
-                            className="text-sm text-gray-500 hover:text-gray-900 flex items-center gap-1"
+                            className="text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-100 border border-transparent hover:border-gray-300 rounded-sm px-2 py-1 flex items-center gap-1 cursor-pointer"
                         >
                           See all
                           <FiChevronRight className="text-lg leading-none" />
@@ -2554,9 +2569,9 @@ const CopyTrading = () => {
                     <div className="mb-10">
                        <div className="flex items-center justify-between mb-4">
                         <h3 className="text-sm sm:text-base font-semibold text-gray-900">New Strategies</h3>
-                        <button 
+                        <button
                             onClick={handleOpenNewStrategiesAll}
-                            className="text-sm text-gray-500 hover:text-gray-900 flex items-center gap-1"
+                            className="text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-100 border border-transparent hover:border-gray-300 rounded-sm px-2 py-1 flex items-center gap-1 cursor-pointer"
                         >
                           See all
                           <FiChevronRight className="text-lg leading-none" />
@@ -2621,9 +2636,9 @@ const CopyTrading = () => {
                     <div className="mb-10">
                        <div className="flex items-center justify-between mb-4">
                         <h3 className="text-sm sm:text-base font-semibold text-gray-900">All strategies</h3>
-                        <button 
+                        <button
                             onClick={handleOpenAllStrategiesAll}
-                            className="text-sm text-gray-500 hover:text-gray-900 flex items-center gap-1"
+                            className="text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-100 border border-transparent hover:border-gray-300 rounded-sm px-2 py-1 flex items-center gap-1 cursor-pointer"
                         >
                           See all
                           <FiChevronRight className="text-lg leading-none" />
@@ -2665,7 +2680,7 @@ const CopyTrading = () => {
                                 <p className="text-gray-600 mb-8 text-lg">
                                     Boost your income by sharing your trading strategies with over 50 000 investors.
                                 </p>
-                                <button onClick={() => navigate('/copy-trading/create')} className="bg-[#ffd200] hover:bg-[#ffde02] text-black font-semibold px-8 py-3 rounded-lg transition-colors">
+                                <button onClick={() => navigate('/copy-trading/create')} className="bg-[#ffd200] hover:bg-[#ffde02] text-black font-semibold px-8 py-3 rounded-lg transition-colors cursor-pointer">
                                     Create your first strategy
                                 </button>
                             </div>

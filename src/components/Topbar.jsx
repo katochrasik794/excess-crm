@@ -105,7 +105,7 @@ const profileDropdownContent = [
 ];
 
 // The main Topbar component
-const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
+const Topbar = ({ setIsSidebarOpen, isSidebarOpen, isAuthPage = false }) => {
   const navigate = useNavigate();
   const [isBalanceDropdownOpen, setIsBalanceDropdownOpen] = useState(false);
   const [isBalanceHidden, setIsBalanceHidden] = useState(false);
@@ -221,6 +221,14 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
     </div>
   );
 
+  if (isAuthPage) {
+    return (
+      <header className="bg-white h-[56px] w-full z-10 flex items-center justify-center px-4 relative">
+        <img src="/finCRM-logo-dark (1).png" alt="" className="w-48 cursor-pointer" onClick={() => navigate('/my-account')} />
+      </header>
+    );
+  }
+
   return (
     <header className="bg-white h-[56px] w-full z-10 flex items-center justify-between px-4 relative">
 
@@ -239,13 +247,13 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
 
         {/* Desktop: Logo */}
         <div className="hidden lg:block flex-shrink:0">
-          <img src="/finCRM-logo-dark (1).png" alt="" className="px-4 w-48"/>
+          <img src="/finCRM-logo-dark (1).png" alt="" className="px-4 w-48 cursor-pointer" onClick={() => navigate('/my-account')}/>
         </div>
       </div>
 
       {/* CENTER SECTION (Mobile Only) */}
       <div className="lg:hidden absolute left-1/2 transform -translate-x-1/2">
-        <img src="/finCRM-logo-dark (1).png" alt="" className="w-32"/>
+        <img src="/finCRM-logo-dark (1).png" alt="" className="w-32 cursor-pointer" onClick={() => navigate('/my-account')}/>
       </div>
 
       {/* RIGHT SECTION */}
@@ -255,7 +263,7 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
         <div className="lg:hidden relative">
            <button
              onClick={() => setIsNotificationsDropdownOpen(!isNotificationsDropdownOpen)}
-             className="p-2 text-gray-700 rounded-full hover:bg-gray-100 transition-colors relative"
+             className="p-2 text-gray-700 rounded-full hover:bg-gray-100 transition-colors relative cursor-pointer"
            >
              <Bell className="w-6 h-6" />
              {hasNewNotifications && (
@@ -282,7 +290,7 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
         <div className="hidden lg:block relative">
           <button
             onClick={() => setIsBalanceDropdownOpen(!isBalanceDropdownOpen)}
-            className={`flex items-center text-sm font-semibold text-gray-700 px-3 py-1.5 rounded-sm border transition-colors duration-150 ${isBalanceDropdownOpen ? 'border-gray-500 bg-gray-100' : 'border-transparent hover:border-gray-500 hover:bg-gray-100'}`}
+            className={`flex items-center text-sm font-semibold text-gray-700 px-3 py-1.5 rounded-sm border transition-colors duration-150 cursor-pointer ${isBalanceDropdownOpen ? 'border-gray-500 bg-gray-100' : 'border-transparent hover:border-gray-500 hover:bg-gray-100'}`}
             aria-expanded={isBalanceDropdownOpen}
             aria-controls="balance-dropdown"
           >
@@ -329,15 +337,15 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                   </p>
 
                   <div className="flex gap-4 mt-3">
-                    <button 
+                    <button
                       onClick={() => navigate('/transfer')}
-                      className="px-3 py-1.5 text-xs font-medium rounded-sm bg-gray-100 hover:bg-gray-100"
+                      className="px-3 py-1.5 text-xs font-medium rounded-sm bg-gray-100 hover:bg-gray-100 cursor-pointer"
                     >
                       Transfer
                     </button>
-                    <button 
+                    <button
                       onClick={() => navigate('/withdraw')}
-                      className="px-3 py-1.5 text-xs font-medium rounded-sm bg-gray-100 hover:bg-gray-100"
+                      className="px-3 py-1.5 text-xs font-medium rounded-sm bg-gray-100 hover:bg-gray-100 cursor-pointer"
                     >
                       Withdraw
                     </button>
@@ -366,7 +374,7 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                       onClick={() =>
                         navigator.clipboard.writeText(accountId)
                       }
-                      className="p-1 rounded-full hover:bg-gray-100 transition-colors"
+                      className="p-1 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
                     >
                       <Copy className="w-3.5 h-3.5 text-gray-500" />
                     </button>
@@ -440,7 +448,7 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                         lang === "English"
                           ? "bg-gray-100 text-gray-900"
                           : "text-gray-700 hover:bg-gray-50"
-                      }`}
+                      } cursor-pointer`}
                       onClick={() => {
                         console.log(`Selected language: ${lang}`);
                         setIsLanguageDropdownOpen(false);
@@ -575,6 +583,8 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                                 navigate('/profile');
                               } else if (link.name === "Trading conditions") {
                                 navigate('/trading-conditions');
+                              } else if (link.name === "Sign Out") {
+                                navigate('/auth');
                               } else {
                                 console.log(`Action: ${link.name}`);
                               }

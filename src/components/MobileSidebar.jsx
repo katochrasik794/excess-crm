@@ -200,22 +200,22 @@ const UserProfileSection = ({ onClose, navigate }) => {
         <div className="pb-2">
           <button
             onClick={() => handleNavigation('/profile')}
-            className="w-full text-left px-4 py-3 text-xs text-gray-900 hover:bg-gray-100 transition-colors"
+            className="w-full text-left px-4 py-3 text-xs text-gray-900 hover:bg-gray-100 transition-colors cursor-pointer"
           >
             Settings
           </button>
           <button
             onClick={() => handleNavigation('/trading-conditions')}
-            className="w-full text-left px-4 py-3 text-xs text-gray-900 hover:bg-gray-100 transition-colors border-b border-gray-200"
+            className="w-full text-left px-4 py-3 text-xs text-gray-900 hover:bg-gray-100 transition-colors border-b border-gray-200 cursor-pointer"
           >
             Trading conditions
           </button>
           <button
             onClick={() => {
-              console.log('Sign out clicked');
+              navigate('/auth');
               onClose();
             }}
-            className="w-full flex items-center gap-3 px-4 py-3 text-xs text-red-600 hover:bg-red-50 transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 text-xs text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
           >
             <LogOut className="w-4 h-4" />
             Sign Out

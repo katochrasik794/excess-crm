@@ -2,7 +2,7 @@ import React from 'react';
 
 const ChatBot = ({ isOpen, onToggle }) => {
   const BotAvatar = () => (
-    <div className="w-10 h-10 rounded-full bg-[#ffde02] flex items-center justify-center flex-shrink-0 border-2 border-white shadow-sm overflow-hidden">
+    <div className="w-10 h-10 rounded-full bg-[#ffde02] flex  items-center justify-center flex-shrink:0 border-2 border-white shadow-sm overflow-hidden cursor-pointer">
       <div className="relative w-full h-full flex items-center justify-center">
         <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-[#141d22]">
            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="#ffde02"/>
@@ -20,14 +20,14 @@ const ChatBot = ({ isOpen, onToggle }) => {
         <div className="pointer-events-auto w-[380px] h-[600px] max-w-[calc(100vw-3rem)] max-h-[calc(100vh-6rem)] bg-white rounded-xl shadow-2xl mb-4 flex flex-col overflow-hidden border border-gray-200 animate-in fade-in slide-in-from-bottom-4 duration-200">
            {/* Header */}
            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-white">
-             <h3 className="font-bold text-[16px] text-gray-900">Exness Assistant</h3>
+             <h3 className="font-bold text-[16px] text-gray-900">FinCRM Assistant</h3>
              <div className="flex items-center gap-2">
                <button className="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-50 transition-colors">
                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3"></path>
                  </svg>
                </button>
-               <button onClick={onToggle} className="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-50 transition-colors">
+               <button onClick={onToggle} className="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-50 transition-colors cursor-pointer">
                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -125,7 +125,7 @@ const ChatBot = ({ isOpen, onToggle }) => {
       <div className="hidden lg:inline-flex relative pointer-events-auto">
         <button 
           onClick={onToggle}
-          className="w-14 h-14 bg-[#ffde02] hover:bg-[#FFDB4D] rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-105 active:scale-95 z-50"
+          className="w-14 h-14 bg-[#ffde02] hover:bg-[#FFDB4D] rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-105 active:scale-95 z-50 cursor-pointer"
           aria-label={isOpen ? "Close chat" : "Chat with support"}
         >
           {isOpen ? (

@@ -631,7 +631,7 @@ const NicknameModal = ({ isOpen, onClose, account }) => {
           <h3 className="text-xl font-bold text-gray-900">Nickname</h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -716,7 +716,7 @@ const AccountSettingsModal = ({ isOpen, onClose, account }) => {
           <h3 className="text-xl font-bold text-gray-900">Settings</h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -784,7 +784,7 @@ const ReadOnlyAccessModal = ({ isOpen, onClose, account }) => {
           <h3 className="text-xl font-bold text-gray-900">Share read-only access</h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -873,7 +873,7 @@ const ManageStatementsModal = ({ isOpen, onClose, account }) => {
           <h3 className="text-xl font-bold text-gray-900">Manage your statements</h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -1014,7 +1014,7 @@ const AccountDropdownMenu = ({
         <div className="flex justify-around items-center px-2 pb-2 mb-2 border-b border-gray-100">
            {/* Trade */}
            <div className="flex flex-col items-center cursor-pointer group" onClick={() => { onTradeClick(account); onClose(); }}>
-              <div className="w-10 h-10 rounded-full bg-[#ffde02] flex items-center justify-center text-black mb-1 group-hover:bg-yellow-400 transition-colors">
+              <div className="w-10 h-10 rounded-full bg-[#ffde02] flex items-center justify-center cursor-pointer text-black mb-1 group-hover:bg-yellow-400 transition-colors">
                  <ArrowRight className="w-5 h-5" />
               </div>
               <span className="text-xs text-gray-600 font-medium">Trade</span>
@@ -1028,7 +1028,7 @@ const AccountDropdownMenu = ({
                Actually, for Demo, usually we show "Set Balance". 
                Let's follow the image structure for now. */}
            <div className="flex flex-col items-center cursor-pointer group" onClick={() => { navigate("/deposit"); onClose(); }}>
-              <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 mb-1 group-hover:bg-gray-200 transition-colors">
+              <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 mb-1 group-hover:bg-gray-200 transition-colors ">
                  <ArrowDownCircle className="w-5 h-5" />
               </div>
               <span className="text-xs text-gray-600 font-medium">Deposit</span>
@@ -1651,7 +1651,7 @@ const MyAccount = () => {
   const TabItem = ({ name }) => (
     <button
       onClick={() => setActiveTab(name)}
-      className={`pb-2 px-1 text-sm font-semibold transition-colors duration-200 ${
+      className={`pb-2 px-1 text-sm font-semibold transition-colors duration-200 cursor-pointer ${
         activeTab === name
           ? "text-gray-900 border-b-3 border-gray-900"
           : "text-gray-500 hover:text-gray-700"
@@ -1706,7 +1706,7 @@ const MyAccount = () => {
           </h2>
           <button
             onClick={() => navigate("/open-account")}
-            className="flex items-center space-x-2 bg-gray-200/50  text-gray-700 px-4 py-2 rounded-lg text-sm  hover:bg-gray-100"
+            className="flex items-center space-x-2 cursor-pointer bg-gray-200/50  text-gray-700 px-4 py-2 rounded-lg text-sm  hover:bg-gray-100"
           >
             <Plus className="w-5 h-5" />
             <span>Open account</span>
@@ -1757,7 +1757,7 @@ const MyAccount = () => {
           <div className="flex border border-gray-300 rounded-lg p-0.5 bg-white">
             <button
               onClick={() => setViewMode("list")}
-              className={`p-1.5 rounded-md transition-colors ${
+              className={`p-1.5 rounded-md transition-colors cursor-pointer ${
                 viewMode === "list"
                   ? "bg-gray-200 text-gray-900"
                   : "text-gray-500 hover:bg-gray-100"
@@ -1768,7 +1768,7 @@ const MyAccount = () => {
             </button>
             <button
               onClick={() => setViewMode("grid")}
-              className={`p-1.5 rounded-md transition-colors ${
+              className={`p-1.5 rounded-md transition-colors cursor-pointer ${
                 viewMode === "grid"
                   ? "bg-gray-200 text-gray-900"
                   : "text-gray-500 hover:bg-gray-100"

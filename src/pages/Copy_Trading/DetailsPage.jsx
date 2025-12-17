@@ -19,8 +19,22 @@ const TABS = ["Overview", "Orders", "Strategy news", "About Strategy Provider"];
 
 const DetailsPage = () => {
   const [activeTab, setActiveTab] = useState("Overview");
+  const [amount, setAmount] = useState("");
+  const inputRef = React.useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+  
+  // Handle auto-invest from navigation state
+  React.useEffect(() => {
+    if (location.state?.autoInvest && location.state?.fixedAmount) {
+       setAmount(location.state.fixedAmount);
+       // Scroll to invest section after a brief delay ensuring render
+       setTimeout(() => {
+          document.getElementById('invest-section')?.scrollIntoView({ behavior: 'smooth' });
+          inputRef.current?.focus();
+       }, 100);
+    }
+  }, [location.state]);
   const { id } = useParams();
   
   // Use passed strategy or fallback/dummy
@@ -125,6 +139,9 @@ const DetailsPage = () => {
             <div className="relative mb-2">
               <input
                 type="number"
+                ref={inputRef}
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
                 placeholder="0.00"
               />

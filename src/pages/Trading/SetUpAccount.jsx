@@ -148,7 +148,7 @@ const SetUpAccount = () => {
               <button
                 onClick={() => !isStandardCent && setAccountType('demo')}
                 disabled={isStandardCent}
-                className={`flex-1 py-2 text-sm font-medium rounded-sm transition-all ${
+                className={`flex-1 py-2 text-sm font-medium rounded-sm transition-all cursor-pointer ${
                   accountType === 'demo'
                     ? 'bg-[#F9F9F9] text-gray-900'
                     : isStandardCent 
@@ -160,7 +160,7 @@ const SetUpAccount = () => {
               </button>
               <button
                 onClick={() => setAccountType('real')}
-                className={`flex-1 py-2 text-sm font-medium rounded-sm transition-all ${
+                className={`flex-1 py-2 text-sm font-medium rounded-sm transition-all cursor-pointer ${
                   accountType === 'real'
                     ? 'bg-[#F9F9F9] text-gray-900'
                     : 'text-gray-500 hover:text-gray-700'
@@ -349,7 +349,7 @@ const SetUpAccount = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
                 </button>
               </div>
               
@@ -383,7 +383,7 @@ const SetUpAccount = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-[#ffde02] text-gray-900 py-3 rounded-lg font-medium hover:bg-yellow-500 transition-colors shadow-sm"
+              className="w-full bg-[#ffde02] text-gray-900 py-3 rounded-lg font-medium hover:bg-yellow-500 transition-colors shadow-sm cursor-pointer"
             >
               Create account
             </button>
